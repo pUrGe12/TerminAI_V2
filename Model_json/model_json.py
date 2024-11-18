@@ -7,6 +7,8 @@ from pathlib import Path
 
 NAME = "model_json"
 
+# Load the API keys from enviornment
+
 load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')
 API_KEY = str(os.getenv("API_KEY")).strip()
 
@@ -16,7 +18,7 @@ model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
 def GPT_response(user_prompt):
-    prompt = prompts.get(NAME) + f"""
+    prompt = prompts.get(NAME).strip() + f"""
                     This is the user's prompt: {user_prompt}
                 """
     try:
