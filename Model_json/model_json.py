@@ -37,15 +37,9 @@ def GPT_response(user_prompt):
         # parse the output for the json and work summary etc. 
 
         json_list = re.findall('@@@json.*@@@', output, re.DOTALL)
-        # json_val = re.findall("{.*}", json_list[0].strip(), re.DOTALL)[0].strip() 			# Getting a nice normal string here
-        # work_summary_match = re.search(r"\$\$\$summary\s*(.*?)\s*\$\$\$", output, re.DOTALL)
-        # if work_summary_match:
-        #     work_summary = work_summary_match.group(1).strip() 								# Putting an else condition, even though I am sure there must be a match
-        # else:
-        #     work_summary = 'Something went wrong'
-
-        # return (json_val, work_summary)
-        return json_list
+        json_val = re.findall("{.*}", json_list[0].strip(), re.DOTALL)[0].strip() 			# Getting a nice normal string here
+        
+        return json_val
 
     except Exception as e:
         print(f"Error generating GPT response: {e}")
