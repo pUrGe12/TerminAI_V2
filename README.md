@@ -9,4 +9,5 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 ## Pending work
 
+- [ ] Figure out how to import files present in other directories.
 - [ ] Write prompts for the json model.

@@ -7,7 +7,7 @@ from pathlib import Path
 
 NAME = "model_json"
 
-# Load the API keys from enviornment
+# Load the API keys from environment
 
 load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')
 API_KEY = str(os.getenv("API_KEY")).strip()
