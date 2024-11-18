@@ -49,8 +49,3 @@ def GPT_response(user_prompt):
     except Exception as e:
         print(f"Error generating GPT response: {e}")
         return 'Try again'
-
-
-if __name__ == "__main__":
-	user_prompt = "Tell me about Abraham Lincoln"
-	GPT_response(user_prompt)
