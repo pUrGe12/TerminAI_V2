@@ -4,10 +4,11 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 ## Completed work
 
-- [x] Created os environment for the API keys
-- [x] Created the json model framework
+- [x] Created os environment for the API keys.
+- [x] Created the json model framework.
+- [x] Figure out how to import files present in other directories.
 
 ## Pending work
 
-- [ ] Figure out how to import files present in other directories.
 - [ ] Write prompts for the json model.
+- [ ] Test terminal with the model.
