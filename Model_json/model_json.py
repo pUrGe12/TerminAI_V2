@@ -48,5 +48,7 @@ def GPT_response(user_prompt):
         print(f"Error generating GPT response: {e}")
         return 'Try again'
 
-user_prompt = "Tell me about abraham lincon"
-print(GPT_response(user_prompt))
+
+if __name__ == "__main__":
+	user_prompt = "Tell me about Abraham Lincoln"
+	GPT_response(user_prompt)
