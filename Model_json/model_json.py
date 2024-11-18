@@ -4,6 +4,7 @@ from address import prompts
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+import re
 
 NAME = "model_json"
 
@@ -35,7 +36,7 @@ def GPT_response(user_prompt):
 
         # parse the output for the json and work summary etc. 
 
-        # json_list = re.findall('@@@json.*@@@', output, re.DOTALL)
+        json_list = re.findall('@@@json.*@@@', output, re.DOTALL)
         # json_val = re.findall("{.*}", json_list[0].strip(), re.DOTALL)[0].strip() 			# Getting a nice normal string here
         # work_summary_match = re.search(r"\$\$\$summary\s*(.*?)\s*\$\$\$", output, re.DOTALL)
         # if work_summary_match:
@@ -44,7 +45,7 @@ def GPT_response(user_prompt):
         #     work_summary = 'Something went wrong'
 
         # return (json_val, work_summary)
-        return output
+        return json_list
 
     except Exception as e:
         print(f"Error generating GPT response: {e}")

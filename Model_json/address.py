@@ -1,85 +1,71 @@
 prompts = {"model_json": """
-	
-	You will be given a prompt and a history of prompts and responses. The user wants to perform OS-level operations on their system.
+	You will be given a user query. The user's intent may involve system-level changes or multitasking requests. Your role is to:
 
-	**OS-Level Operations** include any actions that interact with the operating system directly. These may include, but are not limited to:
-	  1. **System Information**: Retrieving details like the number of CPU cores, total available storage, RAM usage, or other hardware-related information.
-	  2. **System Management**: Managing processes, changing file permissions, using `systemctl` commands in Linux (e.g., to start, stop, enable, or disable services).
-	  3. **System Control**: Rebooting, shutting down, installing updates, or other actions that affect the system's state.
-	  4. **Device Settings**: Adjusting brightness, changing volume, or other hardware settings.
-	  
-	**Your Task**:
-	1. **Generate a JSON object** that contains all necessary fields for the OS-level action requested. Tailor each field specifically to the type of operation.
-	   - **Required Fields in JSON**:
-	     - **operation**: Specify the action (e.g., "get_cpu_cores", "shutdown", "change_volume").
-	     - **target**: Describe the target if applicable (e.g., "CPU", "volume", "brightness", or "service name" for systemctl actions).
-	     - **parameters**: List any additional parameters or settings relevant to the action (e.g., "level: 75" for volume, "permissions: 755" for chmod).
-	     - **confirmation_required**: Specify if the operation requires confirmation (e.g., `true` for reboot or shutdown actions).
-	   
-	   There might be more relevant fields, include that as well. Include everything that is necessary.
+	Understand the User's Intent: Analyze the user’s prompt to determine if it involves:
 
-	2. **Generate a summary** of the action performed in under 20 words.
-	   - The summary should **describe the action** (e.g., "Adjusted volume to 50%" or "Retrieved CPU core count").
+	OS-level changes
+	Multitasking (e.g., performing multiple system-level tasks or content generation alongside system changes).
+	Generate a JSON Object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
 
-	**Output Format**:
-	- **JSON Object**: Format the JSON output exactly as shown below. Begin with `@@@json` and end with `@@@`.
-	  
+	Mandatory Fields:
+
+	operation: The type of operation being requested (e.g., "starting wifi", "checking usb devices", "file writing", "content generation").
+	order: The execution sequence for multiple tasks. Use integers to indicate the sequence starting from 0.
+	Custom Fields: Include additional fields specific to the operation (e.g., for file writing, include "name" and "location"; for volume change, include "level").
+
+	Special Handling for Multitasking: If multiple tasks are requested:
+
+	Break the tasks into separate operations.
+	Assign each operation a unique sequence number in the order field.
+	Formatting Guidelines:
+
+	Begin the JSON object with @@@json and end it with @@@.
+	For each operation, create a separate key-value pair in the JSON object with all relevant details.
+	Examples:
+
+	Example 1: Single Task (System-Level change)
+	User Query: "Set volume to 50%."
+
 	@@@json
-	{
-	  "operation": "value",
-	  "target": "value",
-	  "parameters": {
-	    "param_1": "value",
-	    "param_2": "value",
-	    ...
-	  },
-	  "confirmation_required": true/false
+		{
+			"operation": "change_volume",
+			"order": 0,
+			"parameters": {
+				"level": 50
+				}
+		}
+	@@@
+
+	Example 2: Multitasking (System-Level change)
+	User Query: "Write a 500-word essay on Abraham Lincoln and save it as a file named 'lincoln.txt' in the root directory."
+
+	@@@json
+		{
+			"operation 1": {
+				"type": "content_generation",
+				"order": 0,
+				"parameters": {
+				"topic": "Abraham Lincoln",
+				"theme": "essay",
+				"word_count": 500
+				}
+			},
+			"operation 2": {
+				"type": "file_writing",
+				"order": 1,
+				"parameters": {
+				"name": "lincoln.txt",
+				"location": "/"
+				}
+			}
 	}
 	@@@
 
-	- **Summary**: Format the summary exactly as shown below. Begin with `$$$summary` and end with `$$$`.
+	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.
 
-	$$$summary
-	<summary text>
-	$$$
-
-	**Example Output** (These are examples, you do not have to follow them exactly but they are a good reference point):
-
-	For a request to adjust system volume:
-	  
-	@@@json
-	{
-	  "operation": "change_volume",
-	  "target": "volume",
-	  "parameters": {
-	    "level": 75
-	  },
-	  "confirmation_required": false
-	}
-	@@@
-
-	$$$summary
-	Set volume to 75%.
-	$$$
-
-	For a request to retrieve CPU core count:
-
-	@@@json
-	{
-	  "operation": "get_cpu_cores",
-	  "target": "CPU",
-	  "parameters": {},
-	  "confirmation_required": false
-	}
-	@@@
-
-	$$$summary
-	Retrieved CPU core count.
-	$$$
-
-	**Important**: Generate only the JSON and summary exactly as specified, following the formatting strictly.
-	
 """,
+
+# Making sample ones for now
 
 "model_1": """
 		You will be given a prompt and some history. Your task is to determine if the given prompt requires any file operations.
