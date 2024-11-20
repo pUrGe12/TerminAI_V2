@@ -12,3 +12,7 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 - [ ] Write prompts for the json model.
 - [ ] Test terminal with the model.
+
+---
+
+If it becomes too heavy for your computer to run all these models along with other systems in parallel, you can use the resources of a workstation and run this in your own computer!
