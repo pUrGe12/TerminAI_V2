@@ -20,3 +20,8 @@ genai.configure(api_key = API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
+model_prompt = prompts.get(NAME)
+
+def generate_command(model_prompt):
+	'''We'll later incorporate history as well'''
+	
