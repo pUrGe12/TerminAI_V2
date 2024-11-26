@@ -1,6 +1,6 @@
 # Json generator model
 
-This is the main json generator. This will take in the user input (and eventually the history) which it will use to make a json type object of all the necessary files.
+This is the main json generator. This will take in the user input (and eventually the history) which it will use to make a json type object of all the necessary things.
 
 ## API Keys
 
