@@ -54,3 +54,4 @@ print(generate_command('Create a file named abcd.txt and add that to a directory
 
 def execute(generated_command):
 	""" We must ensure that the command generated will not harm the computer """
+	pass
