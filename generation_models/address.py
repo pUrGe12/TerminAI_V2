@@ -79,12 +79,12 @@ prompts = {"model_json": """
 		   - Creating or moving files or directories.
 
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
-
 		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Write a 5-word phrase to a file on the desktop.
-		Output: echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt
+		If you're asked to generate and write content, then you must generate the said content and then write it. 
+
+		For example, if the user asks you to "Write a 10-word phrase to a file on the desktop." then the code becomes "echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt".
+		That is, a 10 word phrase actually written, and then added to a file in the desktop.
 
 
 """,

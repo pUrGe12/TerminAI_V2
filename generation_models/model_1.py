@@ -5,7 +5,7 @@ import google.generativeai as genai
 # Necessary imports
 from address import prompts
 import re
-import subprocesses
+import subprocess
 
 # For the environment variables
 import os
@@ -50,8 +50,21 @@ def generate_command(user_prompt):
 
 	return output
 
-print(generate_command('Create a file named abcd.txt and add that to a directory in desktop'))
-
 def execute(generated_command):
-	""" We must ensure that the command generated will not harm the computer """
-	pass
+	""" 
+	We must ensure that the command generated will not harm the computer 
+	-- Implement santisation here!
+	"""
+
+	try:
+		command = generated_command
+		output = subprocess.run(command, shell=True, text=True, check = True, capture_output=True)
+		return output.stdout
+
+	except Exception as e:
+		return f"you've hit {e}"
+
+
+# cmd = generate_command('write a 100 word essay on abhraham lincon and store that in a file in the desktop')
+# print(cmd)
+# print(execute(cmd))
