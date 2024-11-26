@@ -68,7 +68,7 @@ prompts = {"model_json": """
 # Making sample ones for now
 
 "model_1": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires any file operations.
+		You will be given a prompt, where the user is asking for a file operations task. File operations tasks are defined as:
 
 		**File Operations**:
 		1. If the user wants to create, open, close, read, write, or delete a file, or perform any other action related to files.
@@ -78,17 +78,14 @@ prompts = {"model_json": """
 		   - Writing content to a specific file path.
 		   - Creating or moving files or directories.
 
-		If the prompt requires any file operation, output "yes".
-		If the prompt does not involve file operations, output "no".
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+
+		You must output the code and nothing else.
 
 		**Examples**:
-		Prompt: Write a 500-word essay to a file on the desktop.
-		Output: yes (reason: Writing content to a file is a file operation.)
+		Prompt: Write a 5-word phrase to a file on the desktop.
+		Output: echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt
 
-		Prompt: Write a 500-word essay about Lincoln.
-		Output: no (reason: This only requests content generation without file operations.)
-
-		Use the history for additional context.
 
 """,
 
