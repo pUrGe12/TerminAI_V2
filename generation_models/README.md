@@ -15,3 +15,6 @@ They basically ensure 2 things
 
 
 We must be careful before executing it, in case the model decided to return `sudo rm -rf /*` cause then the user is fuckd.
+
+
+Ideally we want a RAG or something that is specifically tailored to only giving out codes for a specific class of operations to handle this. For the first product, we'll just use Gemini.
