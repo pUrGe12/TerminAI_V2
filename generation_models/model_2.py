@@ -2,13 +2,16 @@
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import google.generativeai as genai
 
+import sys 
+import os
 # Necessary imports
 from address import prompts
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
+
 import re
 import subprocess
 
 # For the environment variables
-import os
 from dotenv import load_dotenv
 from pathlib import Path
 
