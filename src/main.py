@@ -107,31 +107,42 @@ class ModernTerminal(QWidget):
         self.input_field.clear()
 
     def model_json(self, prompt):
-        '''
-        This function is to replicate the running of the models. At first, we'll run the json creator model.
-    
-        For now, we're omitting the history implementation. If not, then this function would take as input the history as well.
-        '''
-        user_prompt = self.current_prompt
-        GPT_response(user_prompt)
-        processed_output = self.current_prompt              # currently setting the processed prompt as the current prompt
+        """
+        Run the GPT model and set up the response for display.
+        """
         
-        QTimer.singleShot(5000, self.display_response)
-        return processed_output
+        user_prompt = self.current_prompt
+        try:
+            processed_output = GPT_response(user_prompt)  # Run the model
+            self.response_output = processed_output  # Store the response
+        except Exception as e:
+            self.response_output = f"Error: {str(e)}"  # Handle errors gracefully
 
+        # Simulate delay before displaying response
+        QTimer.singleShot(5000, self.display_response)
 
     def display_response(self):
-        '''
-            This function first removes the "generating response..." part and displays the output from proces_prompt.
-        '''
+        """
+        Display the processed output from the model.
+        """
+        # Remove the "Generating response..." placeholder
         cursor = self.terminal_display.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.select(QTextCursor.LineUnderCursor)
         cursor.removeSelectedText()
-        cursor.deletePreviousChar()  # Remove the newline after the prompt
-        self.terminal_display.append(
-            f'<span style="color: #FFFFFF;">{self.current_prompt}</span>'
-        )
+        cursor.deletePreviousChar()
+
+        # Display the actual processed response
+        if isinstance(self.response_output, dict):  # Pretty-print JSON if it's a dict
+            import json
+            formatted_output = json.dumps(self.response_output, indent=4)
+            self.terminal_display.append(f"<pre>{formatted_output}</pre>")
+        else:
+            self.terminal_display.append(
+                f'<span style="color: #FFFFFF;">{self.response_output}</span>'
+            )
+
+        # Re-add the prompt bar for the next input
         self.append_prompt()
         self.is_processing = False
         self.terminal_display.moveCursor(QTextCursor.End)
