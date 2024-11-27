@@ -79,136 +79,92 @@ prompts = {"model_json": """
 		   - Creating or moving files or directories.
 
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
-
 		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Write a 5-word phrase to a file on the desktop.
-		Output: echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt
+		If you're asked to generate and write content, then you must generate the said content and then write it. 
 
+		For example, if the user asks you to "Write a 10-word phrase to a file on the desktop." then the code becomes "echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt".
+		That is, a 10 word phrase actually written, and then added to a file in the desktop.
 
 """,
 
 "model_2": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires any OS-level operations.
-
-		Note on operating system applications:
-
-		There is a difference between user programs and operating system. Any program that is not using the restricted instructions of the micro-processor and if using then using it through APIs is a user program.
-		If the prompt and history demand the use of a user program then it is not an operating system level application.
-
-		In general, you will have to classify the following as operating system operations as well. There may be more, but this is the general trend.
+		You will be given a prompt, where the user is asking for an OS-level operation. OS-level operations are defined as:
 
 		**OS-Level Operations**:
 		1. Requests for system information (e.g., CPU cores, available storage, hardware info).
 		2. Managing system processes or configurations (e.g., changing file permissions, killing processes, using system services).
 		3. Requests to perform system-wide actions like rebooting, updating, shutting down, or checking system status (e.g., battery, brightness, volume).
-		4. Any other system operation that directly interacts with or required hardware information, that is, requires interaction with the operating system.
-		5. Examples:
-		   - Rebooting the system or viewing system settings.
+		4. Any other system operation that directly interacts with or requires hardware information, i.e., requires interaction with the operating system.
 
-		If the prompt requires any OS-level operation, output "yes".
-		If the prompt does not involve OS-level operations, output "no".
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Check the available system storage.
-		Output: yes (reason: Retrieving system storage is an OS-level operation.)
-
-		Prompt: Write a paragraph on renewable energy.
-		Output: no (reason: The request only involves content generation, not system-level interaction.)
-
-		Prompt: Write a 500 word essay on xyz and save it on the desktop.
-		Output: no (reason: This requires file operations, and no direct correlation with the operating system, rather uses only user applications.)
+		For example, if the user asks you to 'Check the available system storage.' then the code becomes 'df -h'.
+		That is, a terminal command to achieve the requested OS-level operation is generated and output.
 
 """,
 
 "model_3": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires any application-level operations.
+		You will be given a prompt, where the user is asking for an application-level operation. Application-level operations are defined as:
 
 		**Application-Level Operations**:
 		1. Opening, closing, or interacting with GUI applications (e.g., opening a web browser, viewing a PDF).
 		2. Launching applications that require a graphical interface.
 		3. Any operation that requires the use of an application to access or display content (e.g., opening a document in a text editor).
-		4. Examples:
-		   - Opening a web page in a browser or a PDF in a PDF reader.
 
-		If the prompt requires any application-level operation, output "yes".
-		If the prompt does not involve application-level operations, output "no".
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Open the calculator app.
-		Output: yes (reason: This requires launching a GUI application.)
-
-		Prompt: List all prime numbers under 50.
-		Output: no (reason: This is a content generation task without application-specific interaction.)
+		For example, if the user asks you to 'Open the calculator app.' then the code becomes 'gnome-calculator &'.
+		That is, a terminal command to achieve the requested application-level operation is generated and output.
 
 """,
 
 "model_4": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires any network operations.
+		You will be given a prompt, where the user is asking for a network operation. Network operations are defined as:
 
 		**Network Operations**:
 		1. Managing network connections or devices (e.g., enabling/disabling Wi-Fi or Bluetooth, scanning devices).
 		2. Requests involving network security or monitoring tools (e.g., using Wireshark, performing IP scans, SSH connections).
 		3. Any task that requires interacting with network interfaces, such as checking IP configurations or managing Bluetooth connections.
-		4. Examples:
-		   - Enabling Wi-Fi, connecting to a Bluetooth device, or performing network scans.
 
-		If the prompt requires any network-related operation, output "yes".
-		If the prompt does not involve network-related operations, output "no".
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Connect to Wi-Fi network "Home_Network".
-		Output: yes (reason: Managing Wi-Fi is a network operation.)
-
-		Prompt: Explain network topologies.
-		Output: no (reason: This only involves generating content, not performing network operations.)
+		For example, if the user asks you to 'Connect to Wi-Fi network "Home_Network" with password "abcd"' then the code becomes 'nmcli dev wifi connect "Home_Network" password "abcd"''.
+		That is, a terminal command to achieve the requested network operation is generated and output.
 
 """,
 
 "model_5": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires any installation operations.
+		You will be given a prompt, where the user is asking for an installation operation. Installation operations are defined as:
 
 		**Installation Operations**:
 		1. Requests to install applications, libraries, or packages (e.g., Python packages, system applications).
-		2. Commands or tasks that involve "install" operations, such as "sudo apt-get install", "pip install", or "snap install".
+		2. Commands or tasks that involve 'install' operations, such as 'sudo apt-get install', 'pip install', or 'snap install'.
 		3. Any installation command, regardless of package type (e.g., Ruby gems, NPM packages).
-		4. Examples:
-		   - Installing a new application or library.
 
-		If the prompt requires any installation operation, output "yes".
-		If the prompt does not involve installation operations, output "no".
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		You must output the code and nothing else.
 
-		**Examples**:
-		Prompt: Install NumPy for Python.
-		Output: yes (reason: This request requires installing a Python package.)
-
-		Prompt: Describe the uses of NumPy.
-		Output: no (reason: This only requests content without installation.)
-
+		For example, if the user asks you to 'Install numpy for Python.' then the code becomes 'pip install numpy'.
+		That is, a terminal command to achieve the requested installation operation is generated and output.
 """,
 
 "model_6": """
-		You will be given a prompt and some history. Your task is to determine if the given prompt requires content generation operations.
+		You will be given a prompt, where the user is asking for content generation that can be displayed on the terminal. Content generation operations are defined as:
 
 		**Content Generation Operations**:
-		1. Requests to generate text or information without any further action, such as "explain", "summarize", or "list".
-		2. Content requests that do not require system commands (e.g., `os.system()`) or interaction with files or applications.
+		1. Requests to generate text or information, such as 'explain', 'summarize', or 'list'.
+		2. Content requests that do not require system commands or interaction with files or applications.
 		3. Any prompt asking for displayed or printed content without additional operations.
-		4. Examples:
-		   - Generating summaries, essays, or examples.
 
-		If the user is in a conversational tone, then the output should be "yes"
+		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		You must output the code and nothing else.
 
-		If the prompt requires content generation, output "yes".
-		If the prompt does not involve content generation, output "no".
-
-		**Examples**:
-		Prompt: Write a 300-word essay on climate change.
-		Output: yes (reason: This requires content creation without other operations.)
-
-		Prompt: Write a 300-word essay to a file on the desktop.
-		Output: no (reason: This includes file operations for saving content.)
+		For example, if the user asks you to 'Generate and display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
+		That is, the generated content is embedded in the code for display on the terminal.
 
 """
 }
