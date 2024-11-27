@@ -41,7 +41,7 @@ prompts = {"model_json": """
 
 	@@@json
 		{
-			"operation 1": {
+			"operation": {
 				"type": "content_generation",
 				"order": 0,
 				"parameters": {
@@ -50,7 +50,7 @@ prompts = {"model_json": """
 				"word_count": 500
 				}
 			},
-			"operation 2": {
+			"operation": {
 				"type": "file_writing",
 				"order": 1,
 				"parameters": {
@@ -62,6 +62,8 @@ prompts = {"model_json": """
 	@@@
 
 	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.
+
+	Make sure the "operation" heading in the json is not numbered. That is, it must always be "operation" and not "operation 1" or such.
 
 """,
 
