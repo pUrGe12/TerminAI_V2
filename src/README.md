@@ -1,4 +1,8 @@
 
+## Ideas
+
+- [ ] Check if we can import the terminal code directly from `terminal_gui`.
+
 ## Things that work
 
 - [x] Terminal GUI that allows users to enter a prompt and processes it.
