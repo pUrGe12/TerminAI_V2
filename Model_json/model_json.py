@@ -43,7 +43,6 @@ chat = model.start_chat(history=[])
 def GPT_response(user_prompt):
     # history = get_history(3)
     prompt = prompts.get(NAME).strip() + f"""
-                    This is the history: {history}
                     This is the user's prompt: {user_prompt}
 
                 """

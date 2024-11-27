@@ -3,7 +3,9 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit
 from PyQt5.QtGui import QFont, QTextCursor
 from PyQt5.QtCore import Qt, QTimer
-from 
+from Model_json.model_json import GPT_response
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
 
 class ModernTerminal(QWidget):
     def __init__(self):
@@ -110,8 +112,10 @@ class ModernTerminal(QWidget):
     
         For now, we're omitting the history implementation. If not, then this function would take as input the history as well.
         '''
-
+        user_prompt = self.current_prompt
+        GPT_response(user_prompt)
         processed_output = self.current_prompt              # currently setting the processed prompt as the current prompt
+        
         QTimer.singleShot(5000, self.display_response)
         return processed_output
 
