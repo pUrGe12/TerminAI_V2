@@ -1,5 +1,3 @@
-import json
-
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import google.generativeai as genai
 
@@ -11,28 +9,6 @@ from address import prompts
 
 from dotenv import load_dotenv
 from pathlib import Path
-
-sample_prompt = """connect to wifi "motog73" and start wireshark recording"""
-
-test_js = """ 
-[
-	{ 
-		"operation": "connect_wifi", 
-			"order": 0, 
-			"parameters": { "wifi_name": "motog73" } 
-	},
-
-	{ 
-		"operation": "start_wireshark_recording", 
-			"order": 1, 
-			"parameters": {}  
-	} 
-] """
-
-
-operations = json.loads(test_js)
-
-sorted_operations = sorted(operations, key=lambda x: x['order']) 			# in general we can assume it will give us the sorted output only
 
 load_dotenv(dotenv_path=Path(__file__).parent.parent.parent / '.env')
 API_KEY = str(os.getenv("API_KEY")).strip()
@@ -64,7 +40,3 @@ def categorise(json):
 	except Exception as e:
 		print(f"Error generating GPT response: {e}")
 		return 'Try again'
-
-categorised = categorise(sorted_operations)
-
-json.loads(categorised)
