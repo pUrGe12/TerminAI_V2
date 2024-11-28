@@ -97,3 +97,11 @@ operations_q = process_json(f"[{sample_json}]")
 
 while not operations_q.empty():
     print("Operations Queue:", operations_q.get())
+
+'''
+output: 
+Operations Queue: {'operation_type': 'generating an essay', 'model_name': 'model_6', 'parameters': {'topic': 'abhraham lincon', 'theme': 'essay', 'word_count': 500}}
+Operations Queue: {'operation_type': 'writing to a file', 'model_name': 'model_1', 'parameters': {'name': 'abhraham lincon', 'location': 'Desktop/', 'content': 'Write a 500 word essay on abhraham lincon and save that in the desktop'}}
+
+Works!
+'''
