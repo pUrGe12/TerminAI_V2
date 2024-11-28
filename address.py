@@ -20,7 +20,7 @@ prompts = {"model_json": """
 	Formatting Guidelines:
 
 	Begin the JSON object with @@@json and end it with @@@. Ensure that its padded with '@' only.
-	For each operation, create a separate key-value pair in the JSON object with all relevant details. Ensure that the "type" of the operation should cover exactly what is being demanded in little words.
+	For each operation, create a separate key-value pair in the JSON object with all relevant details.
 
 	Examples:
 
@@ -52,7 +52,9 @@ prompts = {"model_json": """
 				"theme": "essay",
 				"word_count": 500
 				}
-			},
+			}
+		},
+		{
 			"operation": {
 				"type": "writing to a file",
 				"order": 1,
@@ -61,7 +63,7 @@ prompts = {"model_json": """
 				"location": "/"
 				}
 			}
-	}
+		}
 	@@@
 
 	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.

@@ -63,36 +63,37 @@ def process_json(input_json):
         return None
 
 sample_json = """
-[
-	{ 
-		"operation": { 
-			"type": "generating an essay", 
-			"order": 0, 
-			"parameters": { 
-				"topic": "phones", 
-				"theme": "essay", 
-				"word_count": 200 
-			}, 
-			"category": "content_operations" 
-		}
-	}, 
+
 	{ 
 		"operation": { 
 			"type": "writing to a file", 
 			"order": 1, 
 			"parameters": { 
-				"name": null, 
-				"location": "desktop" 
+				"name": "abhraham lincon", 
+				"location": "Desktop/", 
+				"content": "Write a 500 word essay on abhraham lincon and save that in the desktop" 
 			}, 
 			"category": "file_operations" 
 		}
+	},
+	{
+		"operation": { 
+			"type": "generating an essay", 
+			"order": 0, 
+			"parameters": { 
+				"topic": "abhraham lincon", 
+				"theme": "essay", 
+				"word_count": 500 
+			}, 
+			"category": "content_operations" 
+		} 
+		
 	}
-]
 
 """
 
 # Process the JSON and populate queues
-operations_q = process_json(sample_json)
+operations_q = process_json(f"[{sample_json}]")
 
 while not operations_q.empty():
     print("Operations Queue:", operations_q.get())
