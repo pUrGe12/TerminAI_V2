@@ -19,8 +19,9 @@ prompts = {"model_json": """
 	Assign each operation a unique sequence number in the order field.
 	Formatting Guidelines:
 
-	Begin the JSON object with @@@json and end it with @@@.
+	Begin the JSON object with @@@json and end it with @@@. Ensure that its padded with '@' only.
 	For each operation, create a separate key-value pair in the JSON object with all relevant details.
+
 	Examples:
 
 	Example 1: Single Task (System-Level change)

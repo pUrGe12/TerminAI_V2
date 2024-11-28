@@ -25,7 +25,7 @@ def categorise(json):
 
 	try:
 		output = ''
-		response = chat.send_message(parser_prompt + f"{json}", stream=True, safety_settings={
+		response = chat.send_message(parser_prompt + f"This is the json: {json}", stream=True, safety_settings={
 				HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE, 
 				HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
 				HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
@@ -38,5 +38,5 @@ def categorise(json):
 		return output
 
 	except Exception as e:
-		print(f"Error generating GPT response: {e}")
-		return 'Try again'
+		print(f"Error generating GPT response in categoriser: {e}")
+		return 'Error here'

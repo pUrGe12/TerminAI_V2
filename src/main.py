@@ -96,7 +96,7 @@ class ModernTerminal(QWidget):
                 - Processes the prompt through the following steps
                     a. Creating the main Json object
                     b. Categorise the operations in one of the 6 areas of interest.
-                     
+
         '''
 
         if self.is_processing:
@@ -154,7 +154,7 @@ class ModernTerminal(QWidget):
         cursor.deletePreviousChar()
 
         # Display the actual processed response
-        if isinstance(self.response_output, dict):  # Pretty-print JSON if it's a dict
+        if isinstance(self.response_output, dict):              # pretty-print JSON if it's a dict
             import json
             formatted_output = json.dumps(self.response_output, indent=4)
             self.terminal_display.append(f"<pre>{formatted_output}</pre>")

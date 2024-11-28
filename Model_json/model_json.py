@@ -49,7 +49,6 @@ def GPT_response(user_prompt):
     # history = get_history(3)
     prompt = prompts.get(NAME).strip() + f"""
                     This is the user's prompt: {user_prompt}
-
                 """
     try:
         output = ''
@@ -71,5 +70,5 @@ def GPT_response(user_prompt):
         return json_val
 
     except Exception as e:
-        print(f"Error generating GPT response: {e}")
-        return 'Try again'
+        print(f"Error generating GPT response in model_json: {e}")
+        return 'YAHA HUI HAI GADBAD'

@@ -38,5 +38,5 @@ def categorise(json):
 		return output
 
 	except Exception as e:
-		print(f"Error generating GPT response: {e}")
-		return 'Try again'
+		print(f"Error generating GPT response in categoriser: {e}")
+		return 'Error here'
