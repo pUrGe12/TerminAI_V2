@@ -6,7 +6,7 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 This is the first draft of TerminAI. This is without history implementation.
 
-![TerminAI](./images/TerminAI_V2_draft_1.png)
+![TerminAI](./images/TerminAI_V2_draft_2.png)
 
 ## Completed work
 
