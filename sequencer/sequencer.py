@@ -25,11 +25,11 @@ def add_operations(op):
 	operations_queue.put(op)
 
 operation_to_name = {
-"file_operations": "model_1",
-"os_operations":"model_2",
-"application_operations":"model_3",
-"network_operations":"model_4",
-"installing_operations":"model_5",
-"content_operations":"model_6",
+		"file_operations": "model_1",
+		"os_operations":"model_2",
+		"application_operations":"model_3",
+		"network_operations":"model_4",
+		"installing_operations":"model_5",
+		"content_operations":"model_6",
 }
 

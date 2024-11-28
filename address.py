@@ -244,3 +244,12 @@ You will be given a json string. The json will have some operations, order of ex
 
 """
 }
+
+operation_to_name = {
+		"file_operations": "model_1",
+		"os_operations":"model_2",
+		"application_operations":"model_3",
+		"network_operations":"model_4",
+		"installing_operations":"model_5",
+		"content_operations":"model_6",
+}
