@@ -4,7 +4,6 @@ This piece of code does the following
 
 - [ ] Takes the categorised json.
 
-
 ## The plan
 
 		- operation 0
@@ -29,3 +28,7 @@ This piece of code does the following
 		then execute operation 2.
 
 		So, we'll first get all their codes, push that in a queue (fifo - so, the first code in, will be the first out when we use get), then empty the queue and execute the commands
+
+## Question
+
+The question now is whether to do this in the main file or in a different file and import the necessary functions?
