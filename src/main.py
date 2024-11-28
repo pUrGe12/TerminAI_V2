@@ -126,7 +126,7 @@ class ModernTerminal(QWidget):
 
     def model_json(self, prompt):
         """
-        Run the GPT model and process the response with categorise.
+        Run the GPT model and process the response with categorise. This is the actual processing logic on the prompt.
         """
         user_prompt = self.current_prompt
         try:
