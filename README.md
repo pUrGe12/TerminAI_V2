@@ -22,6 +22,7 @@ This is the first draft of TerminAI. This is without history implementation.
 - [ ] Loading the `main.py` is sometimes triggering the "application not responding" dialogue box (even though it is).
 - [ ] Create the dictionary that will relate the operation category to the relevant model call.
 
+- [ ] Ensure that the model json using regular expressions correctly. If the model outputs the json in between '`' then we want to avoid printing that!
 ---
 
 If it becomes too heavy for your computer to run all these models along with other systems in parallel, you can use the resources of a workstation and run this in your own computer! (Coming out soon)

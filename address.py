@@ -20,7 +20,7 @@ prompts = {"model_json": """
 	Formatting Guidelines:
 
 	Begin the JSON object with @@@json and end it with @@@. Ensure that its padded with '@' only.
-	For each operation, create a separate key-value pair in the JSON object with all relevant details.
+	For each operation, create a separate key-value pair in the JSON object with all relevant details. Ensure that the "type" of the operation should cover exactly what is being demanded in little words.
 
 	Examples:
 
@@ -29,11 +29,13 @@ prompts = {"model_json": """
 
 	@@@json
 		{
-			"operation": "change_volume",
+			"operation": {
+			"type": "change the volume",
 			"order": 0,
 			"parameters": {
 				"level": 50
 				}
+			}
 		}
 	@@@
 
@@ -65,6 +67,7 @@ prompts = {"model_json": """
 	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.
 
 	Make sure the "operation" heading in the json is not numbered. That is, it must always be "operation" and not "operation 1" or such.
+
 
 """,
 
@@ -245,7 +248,7 @@ You will be given a json string. The json will have some operations, order of ex
 """
 }
 
-operation_to_name = {
+category_to_name = {
 		"file_operations": "model_1",
 		"os_operations":"model_2",
 		"application_operations":"model_3",
