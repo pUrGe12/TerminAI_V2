@@ -2,6 +2,12 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
+## Framework 
+
+This is the first draft of TerminAI. This is without history implementation.
+
+![TerminAI](./images/TerminAI_V2_draft_1.png)
+
 ## Completed work
 
 - [x] Created os environment for the API keys.
