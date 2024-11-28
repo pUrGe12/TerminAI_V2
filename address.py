@@ -67,6 +67,68 @@ prompts = {"model_json": """
 
 """,
 
+"parser":"""
+
+You will be given a json file. The json will have some operations, order of execution and some parameters. Your job is to classify the operations as being one of the following 6 categories.
+	1. File operations task
+		
+		File operations tasks are defined as:
+
+			**File Operations**:
+			1. If the user wants to create, open, close, read, write, or delete a file, or perform any other action related to files.
+			2. Requests involving directories (e.g., creating, deleting, or managing folders) are also considered file operations.
+			3. Any user request, based on the prompt or history, that involves file manipulation counts as a file operation.
+			4. Examples:
+			   - Writing content to a specific file path.
+			   - Creating or moving files or directories.
+
+	2. OS-level operation
+
+		OS-level operations are defined as:
+			
+			**OS-Level Operations**:
+			1. Requests for system information (e.g., CPU cores, available storage, hardware info).
+			2. Managing system processes or configurations (e.g., changing file permissions, killing processes, using system services).
+			3. Requests to perform system-wide actions like rebooting, updating, shutting down, or checking system status (e.g., battery, brightness, volume).
+			4. Any other system operation that directly interacts with or requires hardware information, i.e., requires interaction with the operating system.
+
+	3. Application-level operation
+
+		Application-level operations are defined as:
+
+			**Application-Level Operations**:
+			1. Opening, closing, or interacting with GUI applications (e.g., opening a web browser, viewing a PDF).
+			2. Launching applications that require a graphical interface.
+			3. Any operation that requires the use of an application to access or display content (e.g., opening a document in a text editor).
+
+	4. Network operations
+
+		Network operations are defined as:
+
+			**Network Operations**:
+			1. Managing network connections or devices (e.g., enabling/disabling Wi-Fi or Bluetooth, scanning devices).
+			2. Requests involving network security or monitoring tools (e.g., using Wireshark, performing IP scans, SSH connections).
+			3. Any task that requires interacting with network interfaces, such as checking IP configurations or managing Bluetooth connections.
+
+	5. Installation operations
+
+		Installation operations are defined as:
+
+			**Installation Operations**:
+			1. Requests to install applications, libraries, or packages (e.g., Python packages, system applications).
+			2. Commands or tasks that involve 'install' operations, such as 'sudo apt-get install', 'pip install', or 'snap install'.
+			3. Any installation command, regardless of package type (e.g., Ruby gems, NPM packages).
+
+	6. Content generation operations
+
+		Content generation operations are defined as:
+
+			**Content Generation Operations**:
+			1. Requests to generate text or information, such as 'explain', 'summarize', or 'list'.
+			2. Content requests that do not require system commands or interaction with files or applications.
+			3. Any prompt asking for displayed or printed content without additional operations.
+ 
+""",
 # Making sample ones for now
 
 "model_1": """

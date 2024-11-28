@@ -1,6 +1,18 @@
 import json
 
-prompt = """connect to wifi "motog73" and start wireshark recording"""
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import google.generativeai as genai
+
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
+from address import prompts
+
+from dotenv import load_dotenv
+from pathlib import Path
+
+sample_prompt = """connect to wifi "motog73" and start wireshark recording"""
 
 test_js = """ 
 [
@@ -22,15 +34,42 @@ operations = json.loads(test_js)
 
 sorted_operations = sorted(operations, key=lambda x: x['order']) 			# in general we can assume it will give us the sorted output only
 
-for op in sorted_operations:
-	''' We've ensured that the parameter will be "operation" itself and not "operation 1" or something'''
-	a = op['operation'].replace('_', ' ') 			# In case we need to, will not give errors if none found
-	print(a)
+load_dotenv(dotenv_path=Path(__file__).parent.parent.parent / '.env')
+API_KEY = str(os.getenv("API_KEY")).strip()
 
+def categorise(json):
+	
+	genai.configure(api_key=API_KEY)
+	model = genai.GenerativeModel('gemini-pro')
+	chat = model.start_chat(history=[])
+	
+	parser_prompt = prompts.get('parser')
 
-''' 
-The next step is classifying them into one of the 6 categories and then calling the right function. We will prolly have to use a LLM here as well.
+	output = ""
 
-Alternatively, we can tell the main guy to classify it for us... Ponder...
+	try:
+		output = ''
+		response = chat.send_message(parser_prompt + f"{json}", stream=True, safety_settings={
+		HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE, 
+		HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+		HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+		HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE
+		})
+		for chunk in response:
+			if chunk.text:
+				output += str(chunk.text)
 
-'''
+		return output
+
+	except Exception as e:
+		print(f"Error generating GPT response: {e}")
+		return 'Try again'
+
+# operations_list = []
+# for op in sorted_operations:
+# 	''' We've ensured that the parameter will be "operation" itself and not "operation 1" or something'''
+# 	operations_list.append(op['operation'].replace('_', ' ')) 			# In case we need to, will not give errors if none found
+
+answer = categorise(sorted_operations)
+
+print(answer)
