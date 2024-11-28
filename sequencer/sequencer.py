@@ -11,6 +11,12 @@ This piece of code defines a function that does the following
 import json
 import queue
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
+
+from address import operation_to_name
+
 prompt_queue = queue.Queue()
 operations_queue = queue.Queue()
 
@@ -23,13 +29,4 @@ def add_operations(op):
 	'''
 	assert type(op) == list, 'op must be a list'
 	operations_queue.put(op)
-
-operation_to_name = {
-		"file_operations": "model_1",
-		"os_operations":"model_2",
-		"application_operations":"model_3",
-		"network_operations":"model_4",
-		"installing_operations":"model_5",
-		"content_operations":"model_6",
-}
 
