@@ -69,7 +69,7 @@ prompts = {"model_json": """
 
 "parser":"""
 
-You will be given a json file. The json will have some operations, order of execution and some parameters. Your job is to classify the operations as being one of the following 6 categories.
+You will be given a json string. The json will have some operations, order of execution and some parameters. Your job is to classify the operations as being one of the following 6 categories.
 	1. File operations task
 		
 		File operations tasks are defined as:
@@ -127,7 +127,18 @@ You will be given a json file. The json will have some operations, order of exec
 			1. Requests to generate text or information, such as 'explain', 'summarize', or 'list'.
 			2. Content requests that do not require system commands or interaction with files or applications.
 			3. Any prompt asking for displayed or printed content without additional operations.
- 
+
+	Ensure that you output the same json with no changes, but an additional field titled "category" under which you will name the category for each operation. Note that the category names are
+
+	1. file_operations
+	2. os_operations
+	3. application_operations
+	4. network_operations
+	5. installing_operations
+	6. content_operations
+
+	You need to label the operations as strictly one of these 6, following the exact same letters and capitalisation.
+
 """,
 # Making sample ones for now
 

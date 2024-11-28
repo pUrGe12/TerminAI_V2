@@ -3,9 +3,11 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit
 from PyQt5.QtGui import QFont, QTextCursor
 from PyQt5.QtCore import Qt, QTimer
-from Model_json.model_json import GPT_response
-
+ 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
+
+from Model_json.model_json import GPT_response
+from json_parsing.categoriser import categorise
 
 class ModernTerminal(QWidget):
     def __init__(self):
@@ -86,6 +88,17 @@ class ModernTerminal(QWidget):
         self.terminal_display.moveCursor(QTextCursor.End)
 
     def start_processing(self):
+        '''
+            We're pushing the UI updates first before calling the heavy computation tasks to give some semblance to the users.
+
+            This function essentially does 2 things,
+                - Displays the user's prompt and the output
+                - Processes the prompt through the following steps
+                    a. Creating the main Json object
+                    b. Categorise the operations in one of the 6 areas of interest.
+                     
+        '''
+
         if self.is_processing:
             return
 
@@ -94,6 +107,10 @@ class ModernTerminal(QWidget):
 
         if self.current_prompt.strip():
             self.terminal_display.insertPlainText(self.current_prompt + "\n")
+            self.terminal_display.moveCursor(QTextCursor.End)  # Ensure cursor stays at the bottom
+
+            QApplication.processEvents()  # Force immediate update of the UI
+
             self.command_history.append(self.current_prompt)
             self.history_index = len(self.command_history)
 
@@ -102,19 +119,23 @@ class ModernTerminal(QWidget):
             )
             self.terminal_display.moveCursor(QTextCursor.End)
 
-            self.model_json(self.current_prompt)        # This is where we give the processing logic
+            self.model_json(self.current_prompt)  # Call the processing logic
 
         self.input_field.clear()
 
+
     def model_json(self, prompt):
         """
-        Run the GPT model and set up the response for display.
+        Run the GPT model and process the response with categorise.
         """
-        
         user_prompt = self.current_prompt
         try:
-            processed_output = GPT_response(user_prompt)  # Run the model
-            self.response_output = processed_output  # Store the response
+            # Run the GPT model
+            processed_output = GPT_response(user_prompt)  
+            
+            # Run the categoriser on the output
+            categorised_output = categorise(processed_output)  
+            self.response_output = categorised_output  # Store the categorised output
         except Exception as e:
             self.response_output = f"Error: {str(e)}"  # Handle errors gracefully
 
@@ -162,9 +183,7 @@ class ModernTerminal(QWidget):
         else:
             super().keyPressEvent(event)
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    terminal = ModernTerminal()
-    terminal.show()
-    sys.exit(app.exec_())
+app = QApplication(sys.argv)
+terminal = ModernTerminal()
+terminal.show()
+sys.exit(app.exec_())
