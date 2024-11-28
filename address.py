@@ -43,7 +43,7 @@ prompts = {"model_json": """
 	@@@json
 		{
 			"operation": {
-				"type": "content_generation",
+				"type": "generating an essay",
 				"order": 0,
 				"parameters": {
 				"topic": "Abraham Lincoln",
@@ -52,7 +52,7 @@ prompts = {"model_json": """
 				}
 			},
 			"operation": {
-				"type": "file_writing",
+				"type": "writing to a file",
 				"order": 1,
 				"parameters": {
 				"name": "lincoln.txt",

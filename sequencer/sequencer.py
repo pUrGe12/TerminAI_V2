@@ -30,3 +30,6 @@ def add_operations(op):
 	assert type(op) == list, 'op must be a list'
 	operations_queue.put(op)
 
+sample_json = """
+	
+"""

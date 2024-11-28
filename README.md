@@ -25,3 +25,7 @@ This is the first draft of TerminAI. This is without history implementation.
 ---
 
 If it becomes too heavy for your computer to run all these models along with other systems in parallel, you can use the resources of a workstation and run this in your own computer! (Coming out soon)
+
+---
+
+The way we get the execution order working, we execute the first command, and get the output, then use that to execute the second command and so on.
