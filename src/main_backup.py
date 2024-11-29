@@ -3,17 +3,11 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit
 from PyQt5.QtGui import QFont, QTextCursor
 from PyQt5.QtCore import Qt, QTimer
-import queue
+ 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
 
-# Adding the root directory to the path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
-
-# Importing the required model functions and utilities
 from Model_json.model_json import GPT_response
 from json_parsing.categoriser import categorise
-from sequencer.sequencer import process_json
-
-from generation_models.model_1 import model_1, model_2, model_3, model_4, model_5, model_6
 
 class ModernTerminal(QWidget):
     def __init__(self):
@@ -95,13 +89,13 @@ class ModernTerminal(QWidget):
 
     def start_processing(self):
         '''
-        We're pushing the UI updates first before calling the heavy computation tasks to give some semblance to the users.
+            We're pushing the UI updates first before calling the heavy computation tasks to give some semblance to the users.
 
-        This function essentially does 2 things,
-            - Displays the user's prompt and the output
-            - Processes the prompt through the following steps
-                a. Creating the main Json object
-                b. Categorise the operations in one of the 6 areas of interest.
+            This function essentially does 2 things,
+                - Displays the user's prompt and the output
+                - Processes the prompt through the following steps
+                    a. Creating the main Json object
+                    b. Categorise the operations in one of the 6 areas of interest.
 
         '''
 
@@ -129,6 +123,7 @@ class ModernTerminal(QWidget):
 
         self.input_field.clear()
 
+
     def model_json(self, prompt):
         """
         Run the GPT model and process the response with categorise. This is the actual processing logic on the prompt.
@@ -136,74 +131,16 @@ class ModernTerminal(QWidget):
         user_prompt = self.current_prompt
         try:
             # Run the GPT model
-            processed_output = GPT_response(user_prompt)
+            processed_output = GPT_response(user_prompt)  
             
             # Run the categoriser on the output
-            categorised_output = categorise(processed_output)
-            
-            # Convert JSON output to a queue of operations
-            operations_q = process_json(categorised_output)
-
-            # Process the queue
-            final_results = self.execute_queue(operations_q)
-
-            self.response_output = final_results  # Store the final output
+            categorised_output = categorise(processed_output)  
+            self.response_output = categorised_output  # Store the categorised output
         except Exception as e:
             self.response_output = f"Error: {str(e)}"  # Handle errors gracefully
 
         # Simulate delay before displaying response
         QTimer.singleShot(5000, self.display_response)
-
-    def execute_queue(self, operations_q):
-        """
-        Process the queue of operations one by one.
-        For each operation:
-          - Access the `model_name` and `parameters`.
-          - Dynamically call the appropriate model function.
-        """
-        results = []  # Store results for each operation
-
-        # Dispatch dictionary mapping model names to their corresponding generate and execute methods
-        model_dispatch = {
-            "model_1": ("generation_models.model_1", "generate_command_1", "execute_1"),
-            "model_2": ("generation_models.model_2", "generate_command_2", "execute_2"),
-            "model_3": ("generation_models.model_3", "generate_command_3", "execute_3"),
-            "model_4": ("generation_models.model_4", "generate_command_4", "execute_4"),
-            "model_5": ("generation_models.model_5", "generate_command_5", "execute_5"),
-            "model_6": ("generation_models.model_6", "generate_command_6", "execute_6"),
-        }
-
-        # Now we'll empty the queue and execute the relevant operations one by one and use the output of the previous one in the next model...
-        # This we can do using the results list maybe?
-
-        while not operations_q.empty():
-            operation = operations_q.get()
-            operation_type = operation.get('operation_type')
-            model_name = operation.get('model_name')
-            parameters = operation.get('parameters')
-
-            print(f"Processing operation: {operation}")
-
-            if model_name in model_dispatch:
-                module_path, generate_func, execute_func = model_dispatch[model_name]
-                try:
-                    # Dynamically import and execute
-                    model_module = __import__(module_path, fromlist=[generate_func, execute_func])
-                    generate_command = getattr(model_module, generate_func)
-                    execute_command = getattr(model_module, execute_func)
-
-                    # Generate and execute the command
-                    command = generate_command(f"operation: {operation_type}, parameters: {parameters}", prev_output="")
-                    output = execute_command(command)
-
-                    results.append(output)  # Append the result
-                except Exception as e:
-                    results.append(f"Error processing model {model_name}: {e}")
-            else:
-                results.append(f"Error: Unknown model '{model_name}'.")
-
-        return results
-
 
     def display_response(self):
         """
@@ -217,8 +154,9 @@ class ModernTerminal(QWidget):
         cursor.deletePreviousChar()
 
         # Display the actual processed response
-        if isinstance(self.response_output, list):  # pretty-print results if it's a list
-            formatted_output = "\n".join([str(result) for result in self.response_output])
+        if isinstance(self.response_output, dict):              # pretty-print JSON if it's a dict
+            import json
+            formatted_output = json.dumps(self.response_output, indent=4)
             self.terminal_display.append(f"<pre>{formatted_output}</pre>")
         else:
             self.terminal_display.append(

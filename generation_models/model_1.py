@@ -28,7 +28,7 @@ genai.configure(api_key = API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
-def generate_command(user_prompt):
+def generate_command_1(user_prompt, prev_output):
 	'''We'll later incorporate history as well'''
 	
 	prompt = prompts.get(NAME).strip() + f"""
@@ -53,7 +53,7 @@ def generate_command(user_prompt):
 
 	return output
 
-def execute(generated_command):
+def execute_1(generated_command):
 	""" 
 	We must ensure that the command generated will not harm the computer 
 	-- Implement santisation here!

@@ -2,11 +2,24 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
+# Things to look at RN!
+
+- [ ] Fix the generation models so that they incorporate the output of the previous model as well. In case of sequential execution
+- [ ] Figure out how to define previous output if the first model runs right now
+- [ ] Figure out what the previous output even means in any context
+- [ ] Check if the main function is correctly executing the queued elements
+- [ ] Ensure if the execution of one model is dependent on the others correctly. These are the most crucial parts now!
+
+- [ ] Figure out how what the results list should store, or should it store anything at all or not?
+
 ## Framework 
 
 This is the first draft of TerminAI. This is without history implementation.
 
 ![TerminAI](./images/TerminAI_V2_draft_2.png)
+
+
+
 
 ## Completed work
 
