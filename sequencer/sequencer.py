@@ -6,6 +6,8 @@ This piece of code defines a function that does the following
    and another queue for the user's prompt. Note that it needn't keep the order now, since by virtue of the queue, they are ordered.
 3. It returns the user's prompt_queue and the operations_queue. Later we can probably add the history_queue as well.
 
+
+Now we have to make it importable and usable in the main file.
 '''
 
 import json
