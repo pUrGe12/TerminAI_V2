@@ -143,7 +143,22 @@ You will be given a json string. The json will have some operations, order of ex
 	5. installing_operations
 	6. content_operations
 
-	You need to label the operations as strictly one of these 6, following the exact same letters and capitalisation.
+	You need to label the operations as strictly one of these 6, following the exact same letters and capitalisation. Ensure that the category falls inside the operation header. So, it must be 
+
+	{
+		operation: {
+			type: <xyz>,
+			order: <xyz>,
+			parameters: <xyz>,
+			category: <xyz>
+		}
+		operation: {
+			type: <xyz>,
+			order: <xyz>,
+			parameters: <xyz>,
+			category: <xyz>
+		}
+	}
 
 """,
 # Making sample ones for now

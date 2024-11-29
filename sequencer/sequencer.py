@@ -2,10 +2,9 @@
 This piece of code defines a function that does the following
 
 1. It takes in the json input with the categories and all, and based on the order puts them in a queue.
-2. Inside the queue it keeps the operation, the model name (we'll keep a dictionary that translates the given function to the model name), 
-   and another queue for the user's prompt. Note that it needn't keep the order now, since by virtue of the queue, they are ordered.
-3. It returns the user's prompt_queue and the operations_queue. Later we can probably add the history_queue as well.
-
+2. Inside the queue it keeps the operation, the model name (we'll keep a dictionary that translates the given function to the model name). 
+   Note that it needn't keep the order now, since by virtue of the queue, they are ordered.
+3. It returns the operations_queue. 
 
 Now we have to make it importable and usable in the main file.
 '''
@@ -49,10 +48,12 @@ def process_json(input_json):
         sorted_operations = sorted(operations, key=lambda x: x.get("operation", {}).get("order", float("inf")))
         
         for op in sorted_operations:
+            print(op)
             operation_details = op.get("operation", {})
             operation_type = operation_details.get("type")
             category = operation_details.get("category", "unknown_category")
             parameters = operation_details.get("parameters", {})
+            print(category)
             model_name = category_to_name.get(category.lower(), "UnknownModel")
             
             # Add to operations queue
@@ -65,37 +66,14 @@ def process_json(input_json):
         return None
 
 sample_json = """
-
-	{ 
-		"operation": { 
-			"type": "writing to a file", 
-			"order": 1, 
-			"parameters": { 
-				"name": "abhraham lincon", 
-				"location": "Desktop/", 
-				"content": "Write a 500 word essay on abhraham lincon and save that in the desktop" 
-			}, 
-			"category": "file_operations" 
-		}
-	},
-	{
-		"operation": { 
-			"type": "generating an essay", 
-			"order": 0, 
-			"parameters": { 
-				"topic": "abhraham lincon", 
-				"theme": "essay", 
-				"word_count": 500 
-			}, 
-			"category": "content_operations" 
-		} 
-		
-	}
-
+{ "operation": { "type": "turn on airplane mode", "order": 0 }, "category": "os_operations" }
 """
 
 # Process the JSON and populate queues
 operations_q = process_json(f"[{sample_json}]")
+
+
+''' This is essentially what I need to do in the main code. We will get the operations queue.  '''
 
 while not operations_q.empty():
     print("Operations Queue:", operations_q.get())
