@@ -193,7 +193,7 @@ class ModernTerminal(QWidget):
                     execute_command = getattr(model_module, execute_func)
 
                     # Generate and execute the command
-                    command = generate_command(user_prompt = f"operation: {operation_type}, parameters: {parameters}", prev_output="")
+                    command = generate_command(operation = operation_type, parameters = {parameters}, prev_output="") # what to put here?
                     output = execute_command(command)
 
                     results.append(output)  # Append the result
