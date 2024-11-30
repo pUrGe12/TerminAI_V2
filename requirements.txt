@@ -1,0 +1,5 @@
+PyQt5
+google.generativeai
+python-dotenv
+supabase
+pathlib
