@@ -38,7 +38,7 @@ def generate_command_6(operation, parameters, additional_data):
 	
 	prompt = prompts.get(NAME).strip() + f"""\n
                 This is the operation: {operation}\n
-                These are the parameteres: {parameteres}\n
+                These are the parameteres: {parameters}\n
                 This is the additional data: {additional_data}
             """
 	try:
