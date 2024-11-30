@@ -28,7 +28,7 @@ genai.configure(api_key = API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
-def generate_command_2(user_prompt, prev_output):
+def generate_command_2(operation, parameters, additional_data):
 	'''
 	Incorporating prev_output and thus generating an output, using additional_data. Their prompt specifies that any missing field will be present inside additional_data.
 	

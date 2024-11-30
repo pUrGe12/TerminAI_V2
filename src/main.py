@@ -13,7 +13,13 @@ from Model_json.model_json import GPT_response
 from json_parsing.categoriser import categorise
 from sequencer.sequencer import process_json
 
-from generation_models.model_1 import model_1, model_2, model_3, model_4, model_5, model_6
+# Maybe we can make this look much better?
+from generation_models.model_1 import generate_command_1, execute_1
+from generation_models.model_2 import generate_command_2, execute_2
+from generation_models.model_3 import generate_command_3, execute_3
+from generation_models.model_4 import generate_command_4, execute_4
+from generation_models.model_5 import generate_command_5, execute_5
+from generation_models.model_6 import generate_command_6, execute_6
 
 class ModernTerminal(QWidget):
     def __init__(self):
