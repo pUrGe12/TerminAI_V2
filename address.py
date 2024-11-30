@@ -164,7 +164,7 @@ You will be given a json string. The json will have some operations, order of ex
 # Making sample ones for now
 
 "model_1": """
-		You will be given a prompt, where the user is asking for a file operations task. File operations tasks are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for a file operations task. File operations tasks are defined as:
 
 		**File Operations**:
 		1. If the user wants to create, open, close, read, write, or delete a file, or perform any other action related to files.
@@ -175,17 +175,15 @@ You will be given a json string. The json will have some operations, order of ex
 		   - Creating or moving files or directories.
 
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
+		
 		You must output the code and nothing else.
 
-		If you're asked to generate and write content, then you must generate the said content and then write it. 
-
-		For example, if the user asks you to "Write a 10-word phrase to a file on the desktop." then the code becomes "echo "To be or not to be, that is the question." > ~/Desktop/essay_file.txt".
-		That is, a 10 word phrase actually written, and then added to a file in the desktop.
+		The additional data may or may not be empty. This represents the output of previously ran models. If for example, your operation is saving something to a file and you can't find the content in the parameters, then it will be available as the additional data.
 
 """,
 
 "model_2": """
-		You will be given a prompt, where the user is asking for an OS-level operation. OS-level operations are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for an OS-level operation. OS-level operations are defined as:
 
 		**OS-Level Operations**:
 		1. Requests for system information (e.g., CPU cores, available storage, hardware info).
@@ -196,13 +194,16 @@ You will be given a json string. The json will have some operations, order of ex
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
 
+		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
+
 		For example, if the user asks you to 'Check the available system storage.' then the code becomes 'df -h'.
+
 		That is, a terminal command to achieve the requested OS-level operation is generated and output.
 
 """,
 
 "model_3": """
-		You will be given a prompt, where the user is asking for an application-level operation. Application-level operations are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for an application-level operation. Application-level operations are defined as:
 
 		**Application-Level Operations**:
 		1. Opening, closing, or interacting with GUI applications (e.g., opening a web browser, viewing a PDF).
@@ -212,13 +213,15 @@ You will be given a json string. The json will have some operations, order of ex
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
 
+		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
+
 		For example, if the user asks you to 'Open the calculator app.' then the code becomes 'gnome-calculator &'.
 		That is, a terminal command to achieve the requested application-level operation is generated and output.
 
 """,
 
 "model_4": """
-		You will be given a prompt, where the user is asking for a network operation. Network operations are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for a network operation. Network operations are defined as:
 
 		**Network Operations**:
 		1. Managing network connections or devices (e.g., enabling/disabling Wi-Fi or Bluetooth, scanning devices).
@@ -228,13 +231,15 @@ You will be given a json string. The json will have some operations, order of ex
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
 
+		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
+
 		For example, if the user asks you to 'Connect to Wi-Fi network "Home_Network" with password "abcd"' then the code becomes 'nmcli dev wifi connect "Home_Network" password "abcd"''.
 		That is, a terminal command to achieve the requested network operation is generated and output.
 
 """,
 
 "model_5": """
-		You will be given a prompt, where the user is asking for an installation operation. Installation operations are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for an installation operation. Installation operations are defined as:
 
 		**Installation Operations**:
 		1. Requests to install applications, libraries, or packages (e.g., Python packages, system applications).
@@ -243,13 +248,15 @@ You will be given a json string. The json will have some operations, order of ex
 
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
+	
+		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
 
 		For example, if the user asks you to 'Install numpy for Python.' then the code becomes 'pip install numpy'.
 		That is, a terminal command to achieve the requested installation operation is generated and output.
 """,
 
 "model_6": """
-		You will be given a prompt, where the user is asking for content generation that can be displayed on the terminal. Content generation operations are defined as:
+		You will be given an operation and its related parameters along with additional data, where the user is asking for content generation that can be displayed on the terminal. Content generation operations are defined as:
 
 		**Content Generation Operations**:
 		1. Requests to generate text or information, such as 'explain', 'summarize', or 'list'.
@@ -259,7 +266,9 @@ You will be given a json string. The json will have some operations, order of ex
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
 
-		For example, if the user asks you to 'Generate and display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
+		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
+
+		For example, if the user asks you to 'Display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
 		That is, the generated content is embedded in the code for display on the terminal.
 
 """

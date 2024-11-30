@@ -29,7 +29,9 @@ model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
 def generate_command_1(user_prompt, prev_output):
-	'''We'll later incorporate history as well'''
+	'''
+		Incorporating prev_output and thus generating an output. We'll change the prompt as well. 
+	'''
 	
 	prompt = prompts.get(NAME).strip() + f"""
                 This is the user's prompt: {user_prompt}
