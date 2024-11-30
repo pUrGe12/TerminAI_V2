@@ -176,6 +176,8 @@ class ModernTerminal(QWidget):
         # Now we'll empty the queue and execute the relevant operations one by one and use the output of the previous one in the next model...
         # This we can do using the results list maybe?
 
+        additional_data = ''
+
         while not operations_q.empty():
             operation = operations_q.get()
             operation_type = operation.get('operation_type')
@@ -193,10 +195,11 @@ class ModernTerminal(QWidget):
                     execute_command = getattr(model_module, execute_func)
 
                     # Generate and execute the command
-                    command = generate_command(operation = operation_type, parameters = {parameters}, prev_output="") # what to put here?
+                    command = generate_command(operation = operation_type, parameters = parameters, additional_data=additional_data) # what to put here?
                     output = execute_command(command)
 
                     results.append(output)  # Append the result
+                    additional_data = output                            # So, if its a generation thing, then we will capture that output and pass it in here.   
                 except Exception as e:
                     results.append(f"Error processing model {model_name}: {e}")
             else:

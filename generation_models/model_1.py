@@ -68,7 +68,7 @@ def execute_1(generated_command):
 	try:
 		command = generated_command
 		output = subprocess.run(command, shell=True, text=True, check = True, capture_output=True)
-		return output.stdout
+		return output.stdout																# We've captured this output and stored it.
 
 	except Exception as e:
 		return f"you've hit {e}"
