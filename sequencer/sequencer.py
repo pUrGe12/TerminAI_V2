@@ -77,6 +77,7 @@ sample_json = """
 			"category": "file_operations" 
 		}
 	},
+    
 	{
 		"operation": { 
 			"type": "generating an essay", 

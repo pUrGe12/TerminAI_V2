@@ -143,12 +143,13 @@ class ModernTerminal(QWidget):
         try:
             # Run the GPT model
             processed_output = GPT_response(user_prompt)
-            
+            print(processed_output)
             # Run the categoriser on the output
             categorised_output = categorise(processed_output)
+            print(categorised_output)
             
-            # Convert JSON output to a queue of operations
-            operations_q = process_json(categorised_output)
+            # Converting the JSON output to a queue of operations using the sequencer
+            operations_q = process_json(f"{categorised_output}")
 
             # Process the queue
             final_results = self.execute_queue(operations_q)
@@ -203,6 +204,8 @@ class ModernTerminal(QWidget):
                     # Generate and execute the command
                     command = generate_command(operation = operation_type, parameters = parameters, additional_data=additional_data) # what to put here?
                     output = execute_command(command)
+
+                    print(output)
 
                     results.append(output)  # Append the result
                     additional_data = output                            # So, if its a generation thing, then we will capture that output and pass it in here.   

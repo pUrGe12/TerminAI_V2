@@ -70,6 +70,7 @@ prompts = {"model_json": """
 
 	Make sure the "operation" heading in the json is not numbered. That is, it must always be "operation" and not "operation 1" or such.
 
+	Lastly, if the user is conversing normally then label that as content generation and ensure that the parameters include the prompt that the user has given.
 
 """,
 
@@ -144,22 +145,35 @@ You will be given a json string. The json will have some operations, order of ex
 	6. content_operations
 
 	You need to label the operations as strictly one of these 6, following the exact same letters and capitalisation. Ensure that the category falls inside the operation header. So, it must be 
-
-	{
-		operation: {
-			type: <xyz>,
-			order: <xyz>,
-			parameters: <xyz>,
-			category: <xyz>
+[
+	{ 
+		"operation": { 
+			"type": <xyz>, 
+			"order": <xyz>, 
+			"parameters": { 
+				<abc>: <xyz>, 
+				<abc>: <xyz>, 
+				<abc>: <xyz> 
+			}, 
+			"category": <xyz> 
 		}
-		operation: {
-			type: <xyz>,
-			order: <xyz>,
-			parameters: <xyz>,
-			category: <xyz>
+	},
+    
+	{
+		"operation": { 
+			"type": <xyz>, 
+			"order": <xyz>, 
+			"parameters": { 
+				<abc>: <xyz>, 
+				<abc>: <xyz>, 
+				<abc>: <xyz> 
+			}, 
+			"category": <xyz> 
 		}
 	}
+]
 
+	Ensure that the json is exactly formatted as above. Do not forget to include the square brackets.
 """,
 # Making sample ones for now
 
@@ -270,6 +284,8 @@ You will be given a json string. The json will have some operations, order of ex
 
 		For example, if the user asks you to 'Display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
 		That is, the generated content is embedded in the code for display on the terminal.
+
+		Lastly, if the user is conversing normally, then you will get the prompt in the parameters. Reply appropriately.
 
 """
 }
