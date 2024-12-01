@@ -14,6 +14,14 @@ Run the following command to install the dependencies
 
 		pip install -r requirements.txt
 
+Ensure that you create a `.env` file (cause mine is in `gitignore` for obvious reasons). The format you need to follow is this
+
+		API_KEY=<your_api_key_here>
+		SUPABASE_URL=<your_supabase_url_here>
+		SUPABASE_KEY=<your_supabase_key_here>
+
+For history implementation you will have to create a supabase table and add the credentials in the `.env` file.
+
 ## Completed work
 
 - [x] Created os environment for the API keys.
