@@ -59,18 +59,18 @@ class ModernTerminal(QWidget):
         self.input_field.setFont(QFont("Monospace", 11))
         self.input_field.setStyleSheet("""
             QLineEdit {
-                border: 1px solid black; /* Black border */
-                border-radius: 3px;     /* Optional: Rounded corners */
-                padding: 0px;           /* Inner padding for better spacing */
-                background-color: #999999; /* Background color of the input field */
-                color: black;           /* Text color */
+                border: 1px solid black;    /* Black border */
+                border-radius: 3px;         /* Rounded corners */
+                padding: 0px;               /* Inner padding */
+                background-color: #999999;  /* Background color of the input field same as the general background */
+                color: black;               /* Text color */
             }
         """)
         self.input_field.returnPressed.connect(self.start_processing)
 
         # Add widgets to main layout
-        self.main_layout.addWidget(self.terminal_display, stretch = 1)
-        self.main_layout.setSpacing(0)
+        self.main_layout.addWidget(self.terminal_display, stretch = 1)              # Stretch just means expand this thing till 0 padding.
+        self.main_layout.setSpacing(0)                                              # Remove whitespace between the others and input field.
         self.main_layout.addWidget(self.input_field, stretch = 0)
 
         # Set main layout
@@ -94,7 +94,7 @@ class ModernTerminal(QWidget):
 
         prompt_color_user = "56B6C2"
         prompt_color_host = "E06C75"
-        prompt_color_path = "#98C379"
+        prompt_color_path = "#000000"
         prompt_symbol_color = "#FFFFFF"
 
         # arrow_color = "#98C379"  # Green color for the arrow
