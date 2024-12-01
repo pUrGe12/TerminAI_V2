@@ -1,8 +1,13 @@
+# Integrate concat into this.
+
 import sys
 import os
+
+# PyQT5 imports for the UI
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit
 from PyQt5.QtGui import QFont, QTextCursor
 from PyQt5.QtCore import Qt, QTimer
+
 import queue
 
 # Adding the root directory to the path
@@ -13,7 +18,7 @@ from Model_json.model_json import GPT_response
 from json_parsing.categoriser import categorise
 from sequencer.sequencer import process_json
 
-# Maybe we can make this look much better?
+# Importing the models
 from generation_models.model_1 import generate_command_1, execute_1
 from generation_models.model_2 import generate_command_2, execute_2
 from generation_models.model_3 import generate_command_3, execute_3
@@ -22,10 +27,21 @@ from generation_models.model_5 import generate_command_5, execute_5
 from generation_models.model_6 import generate_command_6, execute_6
 
 class ModernTerminal(QWidget):
+    '''
+    The terminal class, has the following important functions
+
+    1. init_ui --> Define the UI here, the colors, size and everything goes here
+    2. append_prompt --> This is defining the prompt bar, which tells the username, current directory and host
+    3. start_processing --> Here we show the user the "generating response..." message, NEED to fix the delay's here!
+    4. model_json --> Here we are calling the json creation and upgrading models. MAKE IT A BETTER NAME!
+    5. execute --> Call the relevant models and execute in the sequence defined by the queue.
+    6. display_response --> Here we display whatever we need too. UPDATE THIS AS WELL WITH concat.
+    '''
+
     def __init__(self):
         super().__init__()
         self.init_ui()
-        self.command_history = []
+        self.command_history = []                   # This is so that we can press the 'up' key and get the previous prompt
         self.history_index = -1
         self.is_processing = False
         self.current_prompt = ""                    # Store the current prompt text for reuse
