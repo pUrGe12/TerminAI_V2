@@ -46,10 +46,10 @@ class ModernTerminal(QWidget):
         self.terminal_display.setReadOnly(True)
         self.terminal_display.setStyleSheet("""
             QTextEdit {
-                background-color: #1E1E1E;
-                color: #C0C0C0;
+                background-color: #282828;
+                color: #FFFFFF;
                 border: none;
-                padding: 5px;
+                padding: 10px;
             }
         """)
         self.terminal_display.setFont(QFont("Monospace", 11))
@@ -59,8 +59,8 @@ class ModernTerminal(QWidget):
         self.input_field.setFont(QFont("Monospace", 11))
         self.input_field.setStyleSheet("""
             QLineEdit {
-                background-color: #1E1E1E;
-                color: #C0C0C0;
+                background-color: #282828;
+                color: #FFFFFF;
                 border: none;
                 padding: 2px;
             }
@@ -81,29 +81,19 @@ class ModernTerminal(QWidget):
         '''
         This is the prompt bar. 
         '''
-        user = os.getenv("USER", 'user')
-        host = os.uname().nodename
         current_dir = os.getcwd()
-
         home = os.path.expanduser("~")
-        
         if current_dir.startswith(home):
             current_dir = "~" + current_dir[len(home):]
 
-        prompt_color_user = "56B6C2"
-        prompt_color_host = "E06C75"
-        prompt_color_path = "#98C379"
-        prompt_symbol_color = "#FFFFFF"
-
-        # arrow_color = "#98C379"  # Green color for the arrow
-        # path_color = "#56B6C2"   # Blue color for the current directory path
-        # symbol_color = "#C678DD"  # Purple color for the "$" symbol
+        arrow_color = "#98C379"  # Green color for the arrow
+        path_color = "#56B6C2"   # Blue color for the current directory path
+        symbol_color = "#C678DD"  # Purple color for the "$" symbol
 
         prompt_text = (
-            f'<span style="color: {prompt_color_user};">{user}</span>'
-            f'<span style="color: {prompt_color_host};">@{host}</span>:'
-            f'<span style="color: {prompt_color_path};">{current_dir}</span>'
-            f' <span style="color: {prompt_symbol_color};">$</span> '
+            f'<span style="color: {arrow_color};">➜</span> '
+            f'<span style="color: {path_color};">{current_dir}</span> '
+            f'<span style="color: {symbol_color};">$</span> '
         )
 
         self.terminal_display.append(prompt_text)
