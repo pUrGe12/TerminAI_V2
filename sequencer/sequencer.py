@@ -63,45 +63,45 @@ def process_json(input_json):
         print("Invalid JSON format")
         return None
 
-sample_json = """
+# sample_json = """
 
-	{ 
-		"operation": { 
-			"type": "writing to a file", 
-			"order": 1, 
-			"parameters": { 
-				"name": "abhraham lincon", 
-				"location": "Desktop/", 
-				"content": "Write a 500 word essay on abhraham lincon and save that in the desktop" 
-			}, 
-			"category": "file_operations" 
-		}
-	},
+# 	{ 
+# 		"operation": { 
+# 			"type": "writing to a file", 
+# 			"order": 1, 
+# 			"parameters": { 
+# 				"name": "abhraham lincon", 
+# 				"location": "Desktop/", 
+# 				"content": "Write a 500 word essay on abhraham lincon and save that in the desktop" 
+# 			}, 
+# 			"category": "file_operations" 
+# 		}
+# 	},
     
-	{
-		"operation": { 
-			"type": "generating an essay", 
-			"order": 0, 
-			"parameters": { 
-				"topic": "abhraham lincon", 
-				"theme": "essay", 
-				"word_count": 500 
-			}, 
-			"category": "content_operations" 
-		} 
+# 	{
+# 		"operation": { 
+# 			"type": "generating an essay", 
+# 			"order": 0, 
+# 			"parameters": { 
+# 				"topic": "abhraham lincon", 
+# 				"theme": "essay", 
+# 				"word_count": 500 
+# 			}, 
+# 			"category": "content_operations" 
+# 		} 
 		
-	}
+# 	}
 
-"""
+# """
 
-# Process the JSON and populate queues
-operations_q = process_json(f"[{sample_json}]")
+# # Process the JSON and populate queues
+# operations_q = process_json(f"[{sample_json}]")
 
 
-''' This is essentially what I need to do in the main code. We will get the operations queue.  '''
+# ''' This is essentially what I need to do in the main code. We will get the operations queue.  '''
 
-while not operations_q.empty():
-    print("Operations Queue:", operations_q.get())
+# while not operations_q.empty():
+#     print("Operations Queue:", operations_q.get())
 
 '''
 output: 
