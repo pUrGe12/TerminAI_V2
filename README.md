@@ -16,6 +16,10 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 - [ ] Consider adding functionality to execute normal linux commands without having to pass it through the models.
 - [ ] Make sure that `response` is printed as "output: something" or "-> something" etc. Make it look better.
 - [ ] Remove the unnecessary delays please!
+- [ ] If the operating system is windows or mac, then generate that relevant command
+- [ ] Create a setup file that can be referenced by the models
+
+- [ ] Implement history!
 
 # Framework 
 
