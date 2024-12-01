@@ -39,17 +39,17 @@ class ModernTerminal(QWidget):
 
         # Set up the main layout
         self.main_layout = QVBoxLayout()
-        self.main_layout.setContentsMargins(10, 10, 10, 10)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
 
         # Terminal display area
         self.terminal_display = QTextEdit()
         self.terminal_display.setReadOnly(True)
         self.terminal_display.setStyleSheet("""
             QTextEdit {
-                background-color: #1E1E1E;
-                color: #C0C0C0;
+                background-color: #999999;
+                color: #000000;
                 border: none;
-                padding: 5px;
+                padding: 0px;
             }
         """)
         self.terminal_display.setFont(QFont("Monospace", 11))
@@ -59,17 +59,19 @@ class ModernTerminal(QWidget):
         self.input_field.setFont(QFont("Monospace", 11))
         self.input_field.setStyleSheet("""
             QLineEdit {
-                background-color: #1E1E1E;
-                color: #C0C0C0;
-                border: none;
-                padding: 2px;
+                border: 1px solid black; /* Black border */
+                border-radius: 3px;     /* Optional: Rounded corners */
+                padding: 0px;           /* Inner padding for better spacing */
+                background-color: #999999; /* Background color of the input field */
+                color: black;           /* Text color */
             }
         """)
         self.input_field.returnPressed.connect(self.start_processing)
 
         # Add widgets to main layout
-        self.main_layout.addWidget(self.terminal_display)
-        self.main_layout.addWidget(self.input_field)
+        self.main_layout.addWidget(self.terminal_display, stretch = 1)
+        self.main_layout.setSpacing(0)
+        self.main_layout.addWidget(self.input_field, stretch = 0)
 
         # Set main layout
         self.setLayout(self.main_layout)
