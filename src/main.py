@@ -101,6 +101,8 @@ class Worker(QThread):
 
                     print(command)
 
+                    # We're handling changing of directories here itself
+                    # This is because running this in a subprocess does not reflect in the terminal 
                     if command.strip().startswith("cd "):
                         target_dir = command.split(" ", 1)[1]
                         target_dir = os.path.expanduser(target_dir)
