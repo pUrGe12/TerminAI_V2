@@ -21,7 +21,7 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 This is the third draft of TerminAI. This is without history implementation.
 
-![TerminAI](./images/TerminAI_V2_draft_3.png)
+![TerminAI](./images/TerminAI_V2_draft_4.png)
 
 # Terminal
 
