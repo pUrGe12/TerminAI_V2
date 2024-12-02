@@ -2,20 +2,11 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
-# Things to fix ASAP!
-
-- [ ] Integrate the Concat model immediately!
-
-- [ ] It's giving some errors sometimes. Why? Weird errors, not very frequent, but there must be some bug somewhere.
-- [ ] Loading the `main.py` is sometimes triggering the "application not responding" dialogue box (even though it is).
-- [ ] Create the dictionary that will relate the operation category to the relevant model call.
-- [ ] Ensure that the model json using regular expressions correctly. If the model outputs the json in between '`' then we want to avoid printing that!
-
 # Things we can add
 
 - [ ] Consider adding functionality to execute normal linux commands without having to pass it through the models.
-- [ ] Make sure that `response` is printed as "output: something" or "-> something" etc. Make it look better.
-- [ ] Remove the unnecessary delays please!
+- [x] Make sure that `response` is printed as "output: something" or "-> something" etc. Make it look better.
+- [x] Remove the unnecessary delays please!
 - [ ] If the operating system is windows or mac, then generate that relevant command
 - [ ] Create a setup file that can be referenced by the models
 
@@ -26,7 +17,6 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 This is the third draft of TerminAI. This is without history implementation.
 
 ![TerminAI](./images/TerminAI_V2_draft_3.png)
-
 
 # Terminal
 
