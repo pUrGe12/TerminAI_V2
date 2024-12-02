@@ -37,17 +37,22 @@ def GPT_response(user_prompt):
                 """
     try:
         output = ''
-        response = chat.send_message(prompt, stream=True, safety_settings={
+        response = chat.send_message(prompt, stream=False, safety_settings={
             HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE, 
             HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
             HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
             HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE
         })
+
+        # Sometimes the model acts up...
+        if not response:
+            raise ValueError("No response received")
+
         for chunk in response:
             if chunk.text:
                 output += str(chunk.text)
 
-        # parse the output for the json and work summary etc. 
+        # parse the output for the json and work summary etc. The most important piece of code probably.
 
         json_list = re.findall('@@@json.*@@@', output, re.DOTALL)
         json_val = re.findall("{.*}", json_list[0].strip(), re.DOTALL)[0].strip() 			# Getting a nice normal string here
