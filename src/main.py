@@ -230,6 +230,8 @@ class ModernTerminal(QWidget):
         self.current_prompt = self.input_field.text()
 
         if self.current_prompt.strip():
+
+            # First we insert the prompt in the right place
             self.terminal_display.insertPlainText(self.current_prompt + "\n")
             
             # Calling the generating response part here, in a seperate thread.
@@ -247,13 +249,17 @@ class ModernTerminal(QWidget):
 
     def display_response(self, results):
         ''' This function is being used to display the final processed output from the results list '''
+
         cursor = self.terminal_display.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.select(QTextCursor.LineUnderCursor)
+        
         cursor.removeSelectedText()
         cursor.deletePreviousChar()
 
-        formatted_output = "\n".join([f"<span style='color: #007ACC;'>Response:</span> {result} \n" for result in results])
+        formatted_output = "\n".join([
+            f"<span style='color: #007ACC;'>Response:</span> {result} \n" for result in results             # We're printing everything in the results list one by one.
+            ])
         self.terminal_display.append(f"<pre>{formatted_output}</pre>")
 
         # Then we add the prompt bar again for the next input
