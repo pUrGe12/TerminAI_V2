@@ -78,6 +78,8 @@ class Worker(QThread):
 
         additional_data = ''
 
+        print(additional_data)
+
         while not operations_q.empty():
             operation = operations_q.get()
             print(operation)
@@ -96,6 +98,7 @@ class Worker(QThread):
                     command = generate_command(
                         operation=operation_type, parameters=parameters, additional_data=additional_data
                     )
+
                     print(command)
 
                     if command.strip().startswith("cd "):
@@ -108,6 +111,7 @@ class Worker(QThread):
 
                     results.append(output)
                     additional_data = output
+
                 except Exception as e:
                     results.append(f"Error: {str(e)}")
             else:

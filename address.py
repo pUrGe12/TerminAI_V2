@@ -6,10 +6,6 @@ prompts = {"model_json": """
 	- system-level changes
 	- Multitasking (e.g., performing multiple system-level tasks or content generation alongside system changes).
 
-	Note that, if the user has entered something that can be fixed by executing bash commands, then you must specify that as type "error-fixer".
-
-	If the user has asked you to fix an error, then you must put that under type "error-fixer"
-
 	Generate a JSON Object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
 
 	Mandatory Fields:
@@ -26,6 +22,8 @@ prompts = {"model_json": """
 
 	Begin the JSON object with @@@json and end it with @@@. Ensure that its padded with '@' only.
 	For each operation, create a separate key-value pair in the JSON object with all relevant details.
+
+	If the user has asked you to fix an error, then you must put that under type "error-fixer"
 
 	Examples:
 
@@ -66,6 +64,32 @@ prompts = {"model_json": """
 				"parameters": {
 				"name": "lincoln.txt",
 				"location": "/"
+				}
+			}
+		}
+	@@@
+
+	Example 3: Multitasking (System-Level change)
+	User Query: "Generate a sample code using requests library in python and save that in the desktop"
+
+	@@@json
+		{
+			"operation": {
+				"type": "generating python code",
+				"order": 0,
+				"parameters": {
+				"library": "requests",
+				"theme": "sample code"
+				}
+			}
+		},
+		{
+			"operation": {
+				"type": "writing to a file",
+				"order": 1,
+				"parameters": {
+				"name": "sample.py",
+				"location": "~/Desktop/"
 				}
 			}
 		}
@@ -208,7 +232,9 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		
 		You must output the code and nothing else.
 
-		The additional data may or may not be empty. This represents the output of previously ran models. If for example, your operation is saving something to a file and you can't find the content in the parameters, then it will be available as the additional data.
+		The additional data may or may not be empty. This represents the output of previously ran models. 
+
+		If your operation is saving something to a file and you can't find the content in the parameters, then it will be available as the additional data.
 
 """,
 
@@ -291,7 +317,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		**Content Generation Operations**:
 		1. Requests to generate text or information, such as 'explain', 'summarize', or 'list'.
 		2. Content requests that do not require system commands or interaction with files or applications.
-		3. Any prompt asking for displayed or printed content without additional operations.
+		3. Generating code in some programming language.
 
 		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
 		You must output the code and nothing else.
@@ -300,6 +326,8 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		For example, if the user asks you to 'Display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
 		That is, the generated content is embedded in the code for display on the terminal.
+
+		Ensure that the generated content doesn't contain any prefixes or suffixes. It should contant the exact code necessary and nothing else. No padding of sorts.
 
 		Lastly, if the user is conversing normally, then you will get the prompt in the parameters. Reply appropriately.
 
