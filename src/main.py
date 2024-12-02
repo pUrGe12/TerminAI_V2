@@ -277,8 +277,8 @@ class ModernTerminal(QWidget):
         cursor.deletePreviousChar()
 
         # Display the actual processed response
-        if isinstance(self.response_output, list):  # pretty-print results if it's a list
-            formatted_output = "\n".join([str(result) for result in self.response_output])
+        if isinstance(self.response_output, list):                        # pretty-print results if it's a list
+            formatted_output = "\n".join([f"Response: {str(result)}" for result in self.response_output])
             self.terminal_display.append(f"<pre>{formatted_output}</pre>")
         else:
             self.terminal_display.append(
