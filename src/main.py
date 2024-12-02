@@ -278,12 +278,15 @@ class ModernTerminal(QWidget):
 
         # Display the actual processed response
         if isinstance(self.response_output, list):                        # pretty-print results if it's a list
-            formatted_output = "\n".join([f"Response: {str(result)}" for result in self.response_output])
+            formatted_output = "\n".join([
+            f"<span style='color: #007ACC;'>Response:</span> {str(result)} \n"
+            for result in self.response_output
+        ])
             self.terminal_display.append(f"<pre>{formatted_output}</pre>")
         else:
             self.terminal_display.append(
-                f'<span style="color: #FFFFFF;">{self.response_output}</span>'
-            )
+            f"<span style='color: #007ACC;'>Response:</span> "
+            f"<span style='color: #000000;'>{self.response_output}</span>")
 
         # Re-add the prompt bar for the next input
         self.append_prompt()
