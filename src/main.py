@@ -3,7 +3,8 @@
 import sys
 import os
 
-os.environ["QT_QPA_PLATFORM"] = "wayland"
+# uncomment the following line of code
+# os.environ["QT_QPA_PLATFORM"] = "wayland"
 
 # PyQT5 imports for the UI
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTextEdit, QLineEdit
@@ -20,14 +21,14 @@ from Model_json.model_json import GPT_response
 from json_parsing.categoriser import categorise
 from sequencer.sequencer import process_json
 
-# Importing the models
-from generation_models.model_1 import generate_command_1, execute_1
-from generation_models.model_2 import generate_command_2, execute_2
-from generation_models.model_3 import generate_command_3, execute_3
-from generation_models.model_4 import generate_command_4, execute_4
-from generation_models.model_5 import generate_command_5, execute_5
-from generation_models.model_6 import generate_command_6, execute_6
-from generation_models.model_7 import generate_command_7, execute_7
+# Importing the generation models
+from generation_models.model_1 import generate_command_1, execute_1         # File operations
+from generation_models.model_2 import generate_command_2, execute_2         # OS-level operations
+from generation_models.model_3 import generate_command_3, execute_3         # Application operations
+from generation_models.model_4 import generate_command_4, execute_4         # Network operations
+from generation_models.model_5 import generate_command_5, execute_5         # Installation operations
+from generation_models.model_6 import generate_command_6, execute_6         # Content generation operations
+from generation_models.model_7 import generate_command_7, execute_7         # Error fixing operations
 
 class Worker(QThread):
     '''
@@ -59,8 +60,10 @@ class Worker(QThread):
         self.result_ready.emit(results)
 
     def execute_queue(self, operations_q):
-        """
-        Process the queue of operations one by one.
+        """ Process the queue of operations one by one, we get the queue from above after calling process_json on it.
+            The queue contains the operation type, model name (which is required to execute that), and the parameters necessary for it.
+
+            Here, we wait until the queue is empty and keep popping it and execute respectively.
         """
         results = []
         model_dispatch = {
@@ -139,7 +142,7 @@ class ModernTerminal(QWidget):
         self.setWindowTitle("Terminal")
         self.setGeometry(100, 100, 800, 500)
 
-        # Setting up the main layout, setContentsMargins() defines the size of the terminal as soon as launch the program
+        # Setting up the main layout, setContentsMargins() defines the borders and the whitespacing.
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
 
@@ -170,20 +173,28 @@ class ModernTerminal(QWidget):
         """)
         self.input_field.returnPressed.connect(self.start_processing)
 
-        self.main_layout.addWidget(self.terminal_display, stretch=1)
-
+        self.main_layout.addWidget(self.terminal_display, stretch=1)                # Stretch just means expand this thing till 0 padding.
+        self.main_layout.setSpacing(0)                                              # Remove whitespace between the others and input field.
         self.main_layout.addWidget(self.input_field, stretch=0)
+
         self.setLayout(self.main_layout)
+        
+        # Setting up the prompt bar 
         self.append_prompt()
 
     def append_prompt(self):
-        user = os.getenv("USER", 'user')
+        ''' The prompt bar is the little snippet when we enter the commands 
+        We are keeping it simple with this one, just the username, hostname (that we didn't use), and the current directory.
+        '''
+
+        user = os.getenv("USER", 'user')        # We get the user name from here. We should probably pass this to the models as well
         host = os.uname().nodename
         current_dir = os.getcwd()
         home = os.path.expanduser("~")
         if current_dir.startswith(home):
             current_dir = "~" + current_dir[len(home):]
 
+        # Keeping everything black, except the "$" sign which is white. Looks aesthetic!
         prompt_text = (
             f'<span style="color: #000000;">{user}</span>'
             f'<span style="color: #000000;">@UB</span>:'
@@ -195,6 +206,17 @@ class ModernTerminal(QWidget):
         self.terminal_display.moveCursor(QTextCursor.End)
 
     def start_processing(self):
+        '''
+        We're pushing the UI updates first before calling the heavy computation tasks to give some semblance to the users.
+
+        This function essentially does 2 things,
+            - Displays the user's prompt and the output
+            - Processes the prompt through the following steps
+                a. Creating the main Json object
+                b. Categorise the operations in one of the 6 areas of interest.
+
+        '''
+
         if self.is_processing:
             return
 
@@ -203,19 +225,22 @@ class ModernTerminal(QWidget):
 
         if self.current_prompt.strip():
             self.terminal_display.insertPlainText(self.current_prompt + "\n")
+            
+            # Calling the generating response part here, in a seperate thread.
             self.terminal_display.append(
                 '<span style="color: #FFB86C;">Generating response...</span>'
             )
-            self.terminal_display.moveCursor(QTextCursor.End)
+            self.terminal_display.moveCursor(QTextCursor.End)       # Ensuring that the cursor stays at the bottom
             QApplication.processEvents()
 
-            self.worker = Worker(self.current_prompt)
+            self.worker = Worker(self.current_prompt)               # Here we are calling the Worker class, and processing the input in a seperate thread.
             self.worker.result_ready.connect(self.display_response)
             self.worker.start()
 
-        self.input_field.clear()
+        self.input_field.clear()                                    # Since this is a different thread, it clears the input field as soon as we press enter
 
     def display_response(self, results):
+        ''' This function is being used to display the final processed output from the results list '''
         cursor = self.terminal_display.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.select(QTextCursor.LineUnderCursor)
@@ -224,9 +249,10 @@ class ModernTerminal(QWidget):
 
         formatted_output = "\n".join([f"<span style='color: #007ACC;'>Response:</span> {result} \n" for result in results])
         self.terminal_display.append(f"<pre>{formatted_output}</pre>")
-        self.append_prompt()
-        self.is_processing = False
 
+        # Then we add the prompt bar again for the next input
+        self.append_prompt()
+        self.is_processing = False          # Keep track of stuff man
 
 app = QApplication(sys.argv)
 terminal = ModernTerminal()

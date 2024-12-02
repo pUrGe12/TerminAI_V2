@@ -33,6 +33,7 @@ This is the third draft of TerminAI. This is without history implementation.
 This is the terminal
 
 ![Terminal](./Terminal_GUI/images/terminal_2.png)
+
 # To install
 
 Run the following command to install the dependencies
