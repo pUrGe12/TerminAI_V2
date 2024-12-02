@@ -184,7 +184,7 @@ class ModernTerminal(QWidget):
 
             self.response_output = final_results  # Store the final output
         except Exception as e:
-            self.response_output = f"Error: {str(e)}"  # Handle errors gracefully
+            self.response_output = f"Error: {str(e)}"  # Handling errors, we need to make this better before production
 
         # Simulate delay before displaying response
         QTimer.singleShot(5000, self.display_response)
@@ -196,7 +196,8 @@ class ModernTerminal(QWidget):
           - Access the `model_name` and `parameters`.
           - Dynamically call the appropriate model function.
         """
-        results = []  # Store results for each operation
+
+        results = [] 
 
         # Dispatch dictionary mapping model names to their corresponding generate and execute methods
         model_dispatch = {
@@ -207,9 +208,6 @@ class ModernTerminal(QWidget):
             "model_5": ("generation_models.model_5", "generate_command_5", "execute_5"),
             "model_6": ("generation_models.model_6", "generate_command_6", "execute_6"),
         }
-
-        # Now we'll empty the queue and execute the relevant operations one by one and use the output of the previous one in the next model...
-        # This we can do using the results list maybe?
 
         additional_data = ''
 
@@ -229,14 +227,36 @@ class ModernTerminal(QWidget):
                     generate_command = getattr(model_module, generate_func)
                     execute_command = getattr(model_module, execute_func)
 
-                    # Generate and execute the command
-                    command = generate_command(operation = operation_type, parameters = parameters, additional_data=additional_data) # what to put here?
-                    output = execute_command(command)
+                    # Generating the command, function has been imported
+                    command = generate_command(
+                        operation=operation_type, parameters=parameters, additional_data=additional_data
+                    )
+                    
+                    '''
+                    We will have to process commands like "cd" dynamically and not through the model, because if we run that through a subprocess then 
+                    it doesn't really change the directory at all.
+                    '''
+                    if command.strip().startswith("cd "):
+                        try:
+                            target_dir = command.split(" ", 1)[1]
+                            target_dir = os.path.expanduser(target_dir)         # Get the complete directory
+                            os.chdir(target_dir)                                # Change the working directory
+                            self.append_prompt()                                # Update the prompt to reflect the new directory
+                            output = f"Changed directory to {os.getcwd()}"
+                        except IndexError:
+                            output = "Error: No directory specified."
+                        except FileNotFoundError:
+                            output = f"Error: Directory not found: {target_dir}"
+                        except Exception as e:
+                            output = f"Error: {str(e)}"
+                    else:
+                        # Execute non-cd commands normally
+                        output = execute_command(command)
 
                     print(output)
 
-                    results.append(output)  # Append the result
-                    additional_data = output                            # So, if its a generation thing, then we will capture that output and pass it in here.   
+                    results.append(output)          # Appending the result
+                    additional_data = output        # This is so we can pass that in the next model if sequential execution
                 except Exception as e:
                     results.append(f"Error processing model {model_name}: {e}")
             else:
