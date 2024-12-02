@@ -2,6 +2,11 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
+# Things we have to add
+
+- [ ] Pre-define the sudo password for model 6, this we must do through the setup!
+- [ ] Make sure it asks nothing else from the user that is not in the GIVEN terminal.
+
 # Things we can add
 
 - [ ] Consider adding functionality to execute normal linux commands without having to pass it through the models.
