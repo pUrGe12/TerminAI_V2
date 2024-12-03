@@ -197,7 +197,9 @@ class ModernTerminal(QWidget):
 
     def append_prompt(self):
         ''' The prompt bar is the little snippet when we enter the commands 
+
         We are keeping it simple with this one, just the username, hostname (that we didn't use), and the current directory.
+        - In the future we can try adding color coding and git status?
         '''
 
         user = os.getenv("USER", 'user')        # We get the user name from here. We should probably pass this to the models as well
