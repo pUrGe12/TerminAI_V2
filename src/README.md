@@ -1,16 +1,13 @@
 
-## Things that work
+## Things that this man does
 
 - [x] Terminal GUI that allows users to enter a prompt and processes it.
 - [x] Imports across directories, so we don't have to write all the code in one file.
 - [x] The Json generation model and it's output.
-
-## Pending work
-
-- [ ] Ensure execution in the desired sequence.
-- [ ] Create a parser for the json object and figure out the number of operations and the sequence in which they are to be executed.
-- [ ] Call the relevant models and execute them. All of this probably falls under the `start_processing` function. We can define other methods for each model and call them as and when required.
-- [ ] Display the final captured output to the user.
+- [x] Ensure execution in the desired sequence.
+- [x] Create a parser for the json object and figure out the number of operations and the sequence in which they are to be executed.
+- [x] Call the relevant models and execute them. All of this probably falls under the `start_processing` function. We can define other methods for each model and call them as and when required.
+- [x] Display the final captured output to the user.
 
 ### Imports
 
