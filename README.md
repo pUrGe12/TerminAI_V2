@@ -3,9 +3,7 @@
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
 ---
-
-IMPLEMENT history now
-
+implemented history --> Add that in the structure.
 ---
 
 
