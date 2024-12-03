@@ -21,13 +21,13 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 This is the third draft of TerminAI. This is without history implementation.
 
-![TerminAI](./images/TerminAI_V2_draft_4.png)
+![TerminAI](./utils/images/TerminAI_V2_draft_4.png)
 
 # Terminal
 
 This is the terminal
 
-![Terminal](./Terminal_GUI/images/terminal_2.png)
+![Terminal](./utils/Terminal_GUI/images/terminal_2.png)
 
 # To install
 
