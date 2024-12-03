@@ -33,9 +33,10 @@ class Worker(QThread):
     '''
     QThread for running the processing logic in a seperate thread so that we can display "generating response..." while the processing is being done
 
-    Creating a different class works the best!
+    Creating a different class works the best! This has the the run and execute operations, and we simply initialise this class when we need.
     '''
-    result_ready = pyqtSignal(list)  # Here we emit results when processing is done
+
+    result_ready = pyqtSignal(list)             # Here we emit results when processing is done
 
     def __init__(self, prompt, parent=None):
         super().__init__(parent)
@@ -43,8 +44,14 @@ class Worker(QThread):
 
     def run(self):
         """
-        Run the GPT model and process the operations in a background thread.
-        """
+        Run the GPT model and process the operations in a background thread. The run() function calls the following functions
+
+        1. GPT_response --> which creates the initial json
+        2. categoriser --> Which adds the categories to all operations
+        3. process_json --> Returns a queue of operations based on the categoriser's json
+        4. exeucte_queue --> picks each operation from the queue one by one and executes.
+         """
+         
         try:
             # Run the GPT model
             processed_output = GPT_response(self.prompt)
