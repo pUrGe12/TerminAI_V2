@@ -20,6 +20,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from Model_json.model_json import GPT_response
 from json_parsing.categoriser import categorise
 from sequencer.sequencer import process_json
+from concat_model.concat import concatenate
 
 # Importing the generation models
 from generation_models.model_1 import generate_command_1, execute_1         # File operations
@@ -96,8 +97,10 @@ class Worker(QThread):
                     execute_command = getattr(model_module, execute_func)
 
                     command = generate_command(
-                        operation=operation_type, parameters=parameters, additional_data=additional_data
-                    )
+                        operation=operation_type, 
+                        parameters=parameters, 
+                        additional_data=additional_data
+                    )                                       # Passing the additional_data here.
 
                     print(command)
 
@@ -107,12 +110,16 @@ class Worker(QThread):
                         target_dir = command.split(" ", 1)[1]
                         target_dir = os.path.expanduser(target_dir)
                         os.chdir(target_dir)
+                        
                         output = f"Changed directory to {os.getcwd()}"
+                        concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
+
                     else:
                         output = execute_command(command)
+                        concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
 
-                    results.append(output)
-                    additional_data = output
+                    results.append(concat_output)                           # We add the pretty output here 
+                    additional_data = output                                # We can't add the concat output here because thats a summary
 
                 except Exception as e:
                     results.append(f"Error: {str(e)}")

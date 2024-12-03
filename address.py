@@ -6,7 +6,7 @@ prompts = {"model_json": """
 	- system-level changes
 	- Multitasking (e.g., performing multiple system-level tasks or content generation alongside system changes).
 
-	Generate a JSON Object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
+	Generate a JSON object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
 
 	Mandatory Fields:
 
@@ -215,7 +215,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 	Ensure that the json is exactly formatted as above. Do not forget to include the square brackets.
 """,
-# Making sample ones for now
+
 
 "model_1": """
 		You will be given an operation and its related parameters along with additional data, where the user is asking for a file operations task. File operations tasks are defined as:
