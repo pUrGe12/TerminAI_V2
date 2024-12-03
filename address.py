@@ -96,6 +96,22 @@ prompts = {"model_json": """
 		}
 	@@@
 
+	Example 4: Installing things
+	User Query: "install the python module used to send web requests"
+
+	@@@json
+		{
+			"operation": {
+			"type": "install python module",
+			"order": 0,
+			"parameters": {
+				"name": "requests"
+				}
+			}
+		}
+	@@@
+
+
 	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.
 
 	Make sure the "operation" heading in the json is not numbered. That is, it must always be "operation" and not "operation 1" or such.
