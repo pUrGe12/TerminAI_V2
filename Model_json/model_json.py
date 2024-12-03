@@ -15,13 +15,7 @@ from supabase import create_client, Client                                      
 NAME = "model_json"
 
 # Load the API keys from environment
-
 load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')
-
-# url: str = str(os.getenv("SUPABASE_URL")).strip()
-# key: str = str(os.getenv("SUPABASE_KEY")).strip()
-
-# supabase: Client = create_client(url, key)
 
 API_KEY = str(os.getenv("API_KEY")).strip()
 
@@ -30,9 +24,9 @@ genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
-def GPT_response(user_prompt):
-    # history = get_history(3)
+def GPT_response(user_prompt, history):
     prompt = prompts.get(NAME).strip() + f"""
+                    This is the history: {history}, \n
                     This is the user's prompt: {user_prompt}
                 """
     try:

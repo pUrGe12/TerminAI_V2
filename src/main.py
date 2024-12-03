@@ -29,6 +29,40 @@ from generation_models.model_5 import generate_command_5, execute_5         # In
 from generation_models.model_6 import generate_command_6, execute_6         # Content generation operations
 from generation_models.model_7 import generate_command_7, execute_7         # Error fixing operations
 
+# Supabase history initialisation
+from supabase import create_client, Client
+from dotenv import load_dotenv
+from pathlib import Path
+
+load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')              # Loading the enviornment
+
+url: str = str(os.getenv("SUPABASE_URL")).strip()
+key: str = str(os.getenv("SUPABASE_KEY")).strip()
+
+supabase: Client = create_client(url, key)
+
+
+def add_history(user_prompt, categoriser_json, results):
+    ''' 
+    Requires the following fields
+    1. Prompt: This is the user's prompt, needs to be added everytime
+    2. Categorizer_json: We are also adding the categorizer's json because it contains a good summary of everything that needs to be done
+    3. Results: This is a list of the results that is made, we'll add this for final outputs.
+
+    Ensure that the models know how to handle this data. Also make sure that column type is jsonb. 
+    '''
+    assert type(results) == list, 'results must be a list'
+
+    Info = {'Prompt': user_prompt, 'Categorizer_json': categoriser_json, 'Results': results}
+    response = supabase.table('History_v3').insert(Info).execute()
+    
+
+def get_history(n):
+    ''' Gets the last n entries from the History_v3 table. We'll usually just pull the last entry and thats all '''
+    history = supabase.table('History_v3').select("*").order('id', desc=True).limit(n).execute().data
+    return history
+
+
 class Worker(QThread):
     '''
     QThread for running the processing logic in a seperate thread so that we can display "generating response..." while the processing is being done
@@ -53,23 +87,31 @@ class Worker(QThread):
          """
 
         try:
-            # Run the GPT model
-            processed_output = GPT_response(self.prompt)
+            ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. (my hypothesis right now)'''
+            history = get_history(1)
 
-            print(f"processed_output = {processed_output}")
+            processed_output = GPT_response(self.prompt, history)
+
+            # print(f"processed_output = {processed_output}")
+            
             categorised_output = categorise(processed_output)
             operations_q = process_json(f"{categorised_output}")
-            results = self.execute_queue(operations_q)
+            results = self.execute_queue(operations_q, categorised_output)
+
+            ''' We're gonna add to history here, because we have the necessary things '''
+            add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
+
         except Exception as e:
             results = [f"Error: {str(e)}"]
         
         self.result_ready.emit(results)
 
-    def execute_queue(self, operations_q):
-        """ Process the queue of operations one by one, we get the queue from above after calling process_json on it.
-            The queue contains the operation type, model name (which is required to execute that), and the parameters necessary for it.
+    def execute_queue(self, operations_q, categorised_output):
+        """ 
+        Process the queue of operations one by one, we get the queue from above after calling process_json on it.
+        The queue contains the operation type, model name (which is required to execute that), and the parameters necessary for it.
 
-            Here, we wait until the queue is empty and keep popping it and execute respectively.
+        Here, we wait until the queue is empty and keep popping it and execute respectively.
         """
         results = []
         model_dispatch = {
@@ -138,6 +180,7 @@ class Worker(QThread):
                     results.append(f"Error: {str(e)}")
             else:
                 results.append(f"Error: Unknown model '{model_name}'.")
+
         return results
 
 
