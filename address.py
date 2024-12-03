@@ -319,15 +319,18 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		2. Content requests that do not require system commands or interaction with files or applications.
 		3. Generating code in some programming language.
 
-		Your job is to provide the bash code that they can type in the terminal to achieve what they are asking for. You must output the code, such that it is ready to copy and use as it is.
-		You must output the code and nothing else.
+		Your job is to output the thing they are asking for.
 
-		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
+		The additional data may or may not be empty. This represents the output of previously ran models. If all the requirement parameters to generate the content is not present, then you may reference this.
 
-		For example, if the user asks you to 'Display a list of prime numbers under 50.' then the code becomes 'echo "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47"'.
-		That is, the generated content is embedded in the code for display on the terminal.
+		For example, if the user asks you to 'Display a list of prime numbers under 50.' then the code becomes '2 3 5 7 11 13 17 19 23 29 31 37 41 43 47'.
+		That is, the generated content is answering what was being asked.
 
-		Ensure that the generated content doesn't contain any prefixes or suffixes. It should contant the exact code necessary and nothing else. No padding of sorts.
+		Example: if the operation is asking you to generate code using python to print hello world then your output needs to be formatted as,
+		
+		output: print('hello world')
+		
+		Ensure that you output only the generated content, with no prefx and suffix.
 
 		Lastly, if the user is conversing normally, then you will get the prompt in the parameters. Reply appropriately.
 

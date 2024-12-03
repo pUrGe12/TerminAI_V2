@@ -51,12 +51,12 @@ class Worker(QThread):
         3. process_json --> Returns a queue of operations based on the categoriser's json
         4. exeucte_queue --> picks each operation from the queue one by one and executes.
          """
-         
+
         try:
             # Run the GPT model
             processed_output = GPT_response(self.prompt)
 
-            # print(f"processed_output = {processed_output}")
+            print(f"processed_output = {processed_output}")
             categorised_output = categorise(processed_output)
             operations_q = process_json(f"{categorised_output}")
             results = self.execute_queue(operations_q)
@@ -84,9 +84,10 @@ class Worker(QThread):
 
         additional_data = ''
 
-        print(additional_data)
-
         while not operations_q.empty():
+            # We still have the problem of executing commands coming from model 6. We don't have to do that! That's what causing issues.
+            print('previous data: ', additional_data)
+
             operation = operations_q.get()
             print(operation)
 
@@ -107,7 +108,7 @@ class Worker(QThread):
                         additional_data=additional_data
                     )                                       # Passing the additional_data here.
 
-                    print(command)
+                    print('command: ', command)
 
                     # We're handling changing of directories here itself
                     # This is because running this in a subprocess does not reflect in the terminal 
@@ -120,8 +121,15 @@ class Worker(QThread):
                         concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
 
                     else:
-                        output = execute_command(command)
-                        concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
+                        if model_name != "model_6":
+                            # We only execute command when model is not for generation. 
+                            
+                            output = execute_command(command)
+                            concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
+                        else:
+                            output = command                                # we want the reply as it is because its not a system level change
+                            print('this is the generated content: ', output)
+                            concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
 
                     results.append(concat_output)                           # We add the pretty output here 
                     additional_data = output                                # We can't add the concat output here because thats a summary
@@ -271,9 +279,8 @@ class ModernTerminal(QWidget):
         cursor.removeSelectedText()
         cursor.deletePreviousChar()
 
-        formatted_output = "\n".join([
-            f"<span style='color: #007ACC;'>Response:</span> {result} \n" for result in results             # We're printing everything in the results list one by one.
-            ])
+        formatted_output = f"\n <span style='color: #007ACC;'>Response:</span> {results[-1]} \n"             # We're printing only the last entry in the results because it contains the concatenated output of all
+        
         self.terminal_display.append(f"<pre>{formatted_output}</pre>")
 
         # Then we add the prompt bar again for the next input
