@@ -93,7 +93,7 @@ class Worker(QThread):
             ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. '''
 
             history = get_history(1)
-            print(f'Pulled history: {history}')
+            # print(f'Pulled history: {history}')
 
             username = user_dict.get("username")
             operating_system = user_dict.get("operating_system")
@@ -107,7 +107,7 @@ class Worker(QThread):
                 sudo_password = sudo_password
                 )
 
-            print(f"processed_output = {processed_output}")
+            # print(f"processed_output = {processed_output}")
             
             categorised_output = categorise(processed_output)
             operations_q = process_json(f"{categorised_output}")
@@ -116,7 +116,7 @@ class Worker(QThread):
             ''' We're gonna add to history here, because we have the necessary things '''
             add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
 
-            print('Added history')
+            # print('Added history')
 
         except Exception as e:
             results = [f"Error: {str(e)}"]
@@ -151,7 +151,10 @@ class Worker(QThread):
             # print(operation)
 
             operation_type = operation.get('operation_type')
-            model_name = operation.get('model_name')
+            model_name = operation.get('model_name')                    # Which model is acting up?
+            
+            # print(f"model name: {model_name}")
+            
             parameters = operation.get('parameters')
 
             if model_name in model_dispatch:
@@ -190,7 +193,9 @@ class Worker(QThread):
                             concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
                         else:
                             output = command                                # we want the reply as it is because its not a system level change
-                            print('this is the generated content: ', output)
+                            
+                            # print('this is the generated content: ', output)
+                            
                             concat_output = f"{concatenate(user_prompt = self.prompt, final_output = output)} \n"
 
                     results.append(concat_output)                           # We add the pretty output here 
