@@ -5,7 +5,8 @@ prompts = {"model_json": """
 
 	- Generate a JSON object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
 
-	- If the current_prompt is not enough, then you may refer to the previous prompt, and the previous result. The result is a list, it contains the output of multiple models (there might be only 1 entry there in which case only 1 model ran)  
+	- If the current_prompt is not enough, then you may refer to the previous prompt, and the previous result. The result is a list, it contains the output of multiple models (there might be only 1 entry there in which case only 1 model ran).
+	- Note that, only make use of the history if the current prompt is not clear enough
 
 	Mandatory Fields:
 
