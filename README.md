@@ -3,9 +3,10 @@
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
 ---
-implemented history --> Add that in the structure.
----
 
+Make the setup and figure out how to integrate that. Its quite important!
+
+---
 
 # Things we have to add
 
