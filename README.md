@@ -21,8 +21,6 @@ Make the setup and figure out how to integrate that. Its quite important!
 - [ ] If the operating system is windows or mac, then generate that relevant command
 - [ ] Create a setup file that can be referenced by the models
 
-- [ ] Implement history!
-
 # Framework 
 
 This is the third draft of TerminAI. This is without history implementation.
