@@ -25,8 +25,18 @@ model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
 def GPT_response(user_prompt, history):
+    ''' 
+    Takes in the current prompt and history and generates the original Json with operation ordering.
+    "history" basically is a list with one element. The element is a dictionary and I only care about the prevous prompt and the previous result list 
+    '''
+     
+    previous_prompt = history[0].get('Prompt')
+    previous_result = history[0].get('Results')
+
     prompt = prompts.get(NAME).strip() + f"""
-                    This is the history: {history}, \n
+                    This is the previous prompt: {previous_prompt}, \n
+                    This is the previous result: {previous_result}, \n
+                    
                     This is the user's prompt: {user_prompt}
                 """
     try:

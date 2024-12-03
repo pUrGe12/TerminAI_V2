@@ -89,10 +89,11 @@ class Worker(QThread):
         try:
             ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. (my hypothesis right now)'''
             history = get_history(1)
+            print(f'Pulled history: {history}')
 
             processed_output = GPT_response(self.prompt, history)
 
-            # print(f"processed_output = {processed_output}")
+            print(f"processed_output = {processed_output}")
             
             categorised_output = categorise(processed_output)
             operations_q = process_json(f"{categorised_output}")
@@ -100,6 +101,8 @@ class Worker(QThread):
 
             ''' We're gonna add to history here, because we have the necessary things '''
             add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
+
+            print('Added history')
 
         except Exception as e:
             results = [f"Error: {str(e)}"]

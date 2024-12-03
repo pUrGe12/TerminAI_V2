@@ -1,12 +1,11 @@
 prompts = {"model_json": """
-	You will be given a user query. The user's intent may involve system-level changes or multitasking requests. Your role is to:
+	You will be given a user's current query, user's last query and last results. The user's intent may involve system-level changes or multitasking requests. Your role is to:
 
-	Understand the User's Intent: Analyze the user’s prompt to determine if it involves:
+	- Understand the User's Intent: Analyze the user’s prompt to determine if it involves, system-level changes and multitasking (e.g., performing multiple system-level tasks or content generation alongside system changes).
 
-	- system-level changes
-	- Multitasking (e.g., performing multiple system-level tasks or content generation alongside system changes).
+	- Generate a JSON object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
 
-	Generate a JSON object: If the user's prompt involves one or more tasks, create a structured JSON object. The JSON object should adhere to the following:
+	- If the current_prompt is not enough, then you may refer to the previous prompt, and the previous result. The result is a list, it contains the output of multiple models (there might be only 1 entry there in which case only 1 model ran)  
 
 	Mandatory Fields:
 
@@ -16,8 +15,9 @@ prompts = {"model_json": """
 
 	Special Handling for Multitasking: If multiple tasks are requested:
 
-	Break the tasks into separate operations.
-	Assign each operation a unique sequence number in the order field.
+	- Break the tasks into separate operations.
+	- Assign each operation a unique sequence number in the order field.
+	
 	Formatting Guidelines:
 
 	Begin the JSON object with @@@json and end it with @@@. Ensure that its padded with '@' only.
