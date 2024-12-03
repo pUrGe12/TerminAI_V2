@@ -2,6 +2,13 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
+---
+
+IMPLEMENT history now
+
+---
+
+
 # Things we have to add
 
 - [ ] Pre-define the sudo password for model 6, this we must do through the setup!
