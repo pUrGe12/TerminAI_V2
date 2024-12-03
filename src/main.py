@@ -1,9 +1,7 @@
-# Integrate concat into this.
-
 import sys
 import os
 
-# uncomment the following line of code
+# uncomment the following line of code if you don't see the terminal exactly how it looks like in the README file.
 # os.environ["QT_QPA_PLATFORM"] = "wayland"
 
 # PyQT5 imports for the UI
