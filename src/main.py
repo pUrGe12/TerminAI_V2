@@ -34,6 +34,9 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 from pathlib import Path
 
+# Load the data from the setup files as a dictionary
+from utils.setup.data import user_dict
+
 load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')              # Loading the enviornment
 
 url: str = str(os.getenv("SUPABASE_URL")).strip()
@@ -87,11 +90,22 @@ class Worker(QThread):
          """
 
         try:
-            ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. (my hypothesis right now)'''
+            ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. '''
+
             history = get_history(1)
             print(f'Pulled history: {history}')
 
-            processed_output = GPT_response(self.prompt, history)
+            username = user_dict.get("username")
+            operating_system = user_dict.get("operating_system")
+            sudo_password = user_dict.get("sudo_password")
+
+            processed_output = GPT_response(
+                user_prompt = self.prompt, 
+                history = history, 
+                username = username, 
+                operating_system = operating_system, 
+                sudo_password = sudo_password
+                )
 
             print(f"processed_output = {processed_output}")
             
@@ -123,25 +137,28 @@ class Worker(QThread):
             "model_3": ("generation_models.model_3", "generate_command_3", "execute_3"),
             "model_4": ("generation_models.model_4", "generate_command_4", "execute_4"),
             "model_5": ("generation_models.model_5", "generate_command_5", "execute_5"),
-            "model_6": ("generation_models.model_6", "generate_command_6", "execute_6"),
+            "model_6": ("generation_models.model_6", "generate_command_6", "execute_6"),                # Not executing model_6 commands cause they're not commands
             "model_7": ("generation_models.model_7", "generate_command_7", "execute_7")
         }
 
         additional_data = ''
 
         while not operations_q.empty():
-            # We still have the problem of executing commands coming from model 6. We don't have to do that! That's what causing issues.
-            print('previous data: ', additional_data)
+
+            # print('previous data: ', additional_data)
 
             operation = operations_q.get()
-            print(operation)
+            # print(operation)
 
             operation_type = operation.get('operation_type')
             model_name = operation.get('model_name')
             parameters = operation.get('parameters')
 
             if model_name in model_dispatch:
+                # Hopefully its not an unknown model, cause it shoudn't be at all
+
                 module_path, generate_func, execute_func = model_dispatch[model_name]
+                
                 try:
                     model_module = __import__(module_path, fromlist=[generate_func, execute_func])
                     generate_command = getattr(model_module, generate_func)
@@ -155,8 +172,8 @@ class Worker(QThread):
 
                     print('command: ', command)
 
-                    # We're handling changing of directories here itself
-                    # This is because running this in a subprocess does not reflect in the terminal 
+                    # We're handling changing of directories here itself. This is because running this in a subprocess does not reflect in the terminal 
+                    
                     if command.strip().startswith("cd "):
                         target_dir = command.split(" ", 1)[1]
                         target_dir = os.path.expanduser(target_dir)

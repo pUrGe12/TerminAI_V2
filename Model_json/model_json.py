@@ -24,7 +24,7 @@ genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
-def GPT_response(user_prompt, history):
+def GPT_response(user_prompt, history, username, operating_system, sudo_password):
     ''' 
     Takes in the current prompt and history and generates the original Json with operation ordering.
     "history" basically is a list with one element. The element is a dictionary and I only care about the prevous prompt and the previous result list 
@@ -37,7 +37,11 @@ def GPT_response(user_prompt, history):
                     This is the previous prompt: {previous_prompt}, \n
                     This is the previous result: {previous_result}, \n
                     
-                    This is the user's prompt: {user_prompt}
+                    This is the username: {username}, \n
+                    This is the operating system: {operating_system}, \n
+                    This is the sudo password: {sudo_password}, \n
+
+                    This is the user's current prompt: {user_prompt}
                 """
     try:
         output = ''
