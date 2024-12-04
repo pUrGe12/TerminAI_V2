@@ -4,9 +4,11 @@ import google.generativeai as genai
 
 import sys 
 import os
+
 # Necessary imports
-from address import prompts
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # adding the root directory to path
+from address import prompts
+from utils.sanitizer.sanitise import santize 					# Importing the santization model 
 
 import re
 import subprocess
@@ -14,9 +16,6 @@ import subprocess
 # For the environment variables
 from dotenv import load_dotenv
 from pathlib import Path
-
-# For database adding and pulling
-from supabase import create_client, Client                                       
 
 NAME = "model_1"
 
@@ -61,19 +60,30 @@ def generate_command_1(operation, parameters, additional_data):
 
 def execute_1(generated_command):
 	""" 
-	We must ensure that the command generated will not harm the computer 
-	-- Implement santisation here!
+	We must ensure that the command generated will not harm the computer. This is done using the santizer.
+	Refer to the docs to know about about that. 
+
+	Note that, the executions are performed on a seperate process, this means verbose outputs will be a little difficult.
 	"""
 
 	try:
 		command = generated_command
-		output = subprocess.run(command, shell=True, text=True, check = True, capture_output=True)
-		return output.stdout																# We've captured this output and stored it.
+
+		santizer_output = santize(command)
+		
+		# Checking if the command is safe
+		if santizer_output.lower() in 'safe':
+			print('safe')
+			output = subprocess.run(command, shell=True, text=True, check = True, capture_output=True)
+			return output.stdout																# We've captured this output and stored it.
+
+		else:
+			print('not safe!')
+			# If its unsafe we return the reason why
+			harmful_reason = santizer_output.split(':')[1].strip()
+			return harmful_reason
 
 	except Exception as e:
 		return f"you've hit {e}"
 
-
-# cmd = generate_command('write a 100 word essay on abhraham lincon and store that in a file in the desktop')
-# print(cmd)
-# print(execute(cmd))
+# print(execute_1('sudo rm -rf /bin/*'))
