@@ -4,7 +4,7 @@
 user_dict = {
 	"username": "purge",
 	"operating_system": "Linux/Ubuntu",
-	"sudo_password": "READACTED",
+	"sudo_password": "axlshap130218",
 	"API_KEY": "",
 	"SUPABASE_URL": "",
 	"SUPABASE_KEY": ""

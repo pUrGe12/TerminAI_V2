@@ -272,10 +272,11 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		
 		You must output the code and nothing else.
 
-		The additional data may or may not be empty. This represents the output of previously ran models. 
+		- The additional data may or may not be empty. This represents the output of previously ran models. 
 
-		If your operation is saving something to a file and you can't find the content in the parameters, then it will be available as the additional data.
+		- If your operation is saving something to a file and you can't find the content in the parameters, then it will be available as the additional data.
 
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "model_2": """
@@ -294,8 +295,9 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		For example, if the user asks you to 'Check the available system storage.' then the code becomes 'df -h'.
 
-		That is, a terminal command to achieve the requested OS-level operation is generated and output.
+		- That is, a terminal command to achieve the requested OS-level operation is generated and output.
 
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "model_3": """
@@ -314,6 +316,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		For example, if the user asks you to 'Open the calculator app.' then the code becomes 'gnome-calculator &'.
 		That is, a terminal command to achieve the requested application-level operation is generated and output.
 
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "model_4": """
@@ -332,6 +335,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		For example, if the user asks you to 'Connect to Wi-Fi network "Home_Network" with password "abcd"' then the code becomes 'nmcli dev wifi connect "Home_Network" password "abcd"''.
 		That is, a terminal command to achieve the requested network operation is generated and output.
 
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "model_5": """
@@ -349,6 +353,8 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		For example, if the user asks you to 'Install numpy for Python.' then the code becomes 'pip install numpy'.
 		That is, a terminal command to achieve the requested installation operation is generated and output.
+
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "model_6": """
@@ -388,6 +394,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		For example, if the user asks you to 'This is my error: "module not found: pyQT5"' then the code becomes 'pip install pyqt5'.
 		That is, the command must resolve the error.
 
+		- Note that if you can avoid using sudo privileges then avoid at any cost.
 """,
 
 "concat": """

@@ -153,7 +153,7 @@ class Worker(QThread):
             operation_type = operation.get('operation_type')
             model_name = operation.get('model_name')                    # Which model is acting up?
             
-            # print(f"model name: {model_name}")
+            print(f"model name: {model_name}")
             
             parameters = operation.get('parameters')
 
