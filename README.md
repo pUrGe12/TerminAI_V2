@@ -20,7 +20,7 @@ Priorities
 
 # Framework 
 
-This is the third draft of TerminAI. This is without history implementation.
+This is the fifth draft of TerminAI. This is with history implementation.
 
 ![TerminAI](./utils/images/TerminAI_V2_draft_5.png)
 
