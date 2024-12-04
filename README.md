@@ -3,14 +3,12 @@
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
 ---
-
-Make the setup and figure out how to integrate that. Its quite important!
-
 We gotta show verbose outputs when we are installing cause generating command... is not doing it!
 ---
 
 # Things we have to add
 
+- [ ] Add command sanitisation and let the user know if the command is harmful to the system!
 - [ ] Pre-define the sudo password for model 6, this we must do through the setup!
 - [ ] Make sure it asks nothing else from the user that is not in the GIVEN terminal.
 
