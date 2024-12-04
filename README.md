@@ -4,17 +4,19 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 # Things we have to add
 
-- [ ] We'll have to handle `git` and `cd` seperately from others. 
-- [ ] Introduce verbose outputs for installing things.
-- [ ] Test the changing of commands in different operating systems... For windows bypass execution policy first
-
-# Things we can add
+---
+Priorities
 
 - [ ] Consider adding functionality to execute normal linux commands without having to pass it through the models.
-- [x] Make sure that `response` is printed as "output: something" or "-> something" etc. Make it look better.
-- [x] Remove the unnecessary delays please!
-- [ ] If the operating system is windows or mac, then generate that relevant command
-- [ ] Create a setup file that can be referenced by the models
+- [ ] We'll have to handle `git` and `cd` seperately from others. 
+
+---
+
+- [ ] Introduce verbose outputs for installing things.
+- [ ] Test the changing of commands in different operating systems... For windows bypass execution policy first
+- [ ] Update the structure in the image.
+
+---
 
 # Framework 
 
