@@ -4,10 +4,9 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 # Things we have to add
 
-- [ ] Add command sanitisation and let the user know if the command is harmful to the system! Let's create a sanitizer for this?
 - [ ] We'll have to handle `git` and `cd` seperately from others. 
 - [ ] Introduce verbose outputs for installing things.
-- [x] Tell the models they need to change their commands depending on operating system 
+- [ ] Test the changing of commands in different operating systems... For windows bypass execution policy first
 
 # Things we can add
 
@@ -29,33 +28,64 @@ This is the terminal
 
 ![Terminal](./utils/Terminal_GUI/images/terminal_2.png)
 
-# To install
+# Installing the terminal 
 
-Run the following command to install the dependencies
+## Linux
 
-		pip install -r requirements.txt
+Ensure that python, pip and git are installed
 
-Ensure that you create a `.env` file (cause mine is in `gitignore` for obvious reasons). The format you need to follow is this
+		sudo apt update && sudo apt-get install python3
+		sudo apt-get install python3-pip
+		sudo apt install git
 
-		API_KEY=<your_api_key_here>
-		SUPABASE_URL=<your_supabase_url_here>
-		SUPABASE_KEY=<your_supabase_key_here>
+Then clone the GitHub repo locally. Now you can start installing the dependencies.
 
-For history implementation you will have to create a supabase table and add the credentials in the `.env` file.
-
-## Completed work
-
-- [x] Created os environment for the API keys.
-- [x] Created the json model framework.
-- [x] Figure out how to import files present in other directories.
-- [x] Write prompts for the json model.
-- [x] Test terminal with the model.
+		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
 
 
----
+## Windows 
 
-If it becomes too heavy for your computer to run all these models along with other systems in parallel, you can use the resources of a workstation and run this in your own computer! (Coming out soon)
+If winget is installed then run the following command to install python
 
----
+		winget install -e --id Python.Python.3
 
-The way we get the execution order working, we execute the first command, and get the output, then use that to execute the second command and so on.
+Else install python via [python.org](https://www.python.org/downloads). Make sure to add it to the path variables. Note that pip comes installed with python versions 3.4 and above.
+
+Install git using (if no winget then use the [git_website](https://git-scm.com))
+
+		winget install -e --id Git.Git
+
+Then run the following command to clone the it locally,
+
+		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
+
+## MacOS
+
+Install homebrew (mac’s package manager) and python
+
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install python
+
+
+Install git and clone the repo
+
+		brew install git && git --version
+		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
+
+# Setup
+
+## The automated way
+
+The setup is easy, you are required to obtain 
+
+- [x]  Gemini API keys from over here.
+- [x] Create a database over at supabase and get the URL and KEY (the anon public one).
+
+Then you’re required to copy the SQL query over at [table_creation](./utils/setup/table_creation.sql) and run that in the SQL editor of your database.
+
+For Linux and Mac users, run the [setup.sh](./utils/setup/setup.sh) which will take care of the other things using the command below and enter the data whenever required.
+
+For Windows users, execute the PowerShell script [setup.ps1](./utils/setup/setup.ps1) and enter the data whenever required. 
+
+Note for Windows users, you will need to bypass the execution policy to be able to use TerminAI at all (because Windows doesn’t allow command execution by normal users). Use the below command as an administrator in the PowerShell.l
+
+		Set-ExecutionPolicy -Bypass -Scope Process
