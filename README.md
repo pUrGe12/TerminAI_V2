@@ -4,11 +4,10 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 # Things we have to add
 
-- [ ] Add command sanitisation and let the user know if the command is harmful to the system!
-- [ ] Make sure it asks nothing else from the user that is not in the GIVEN terminal.
+- [ ] Add command sanitisation and let the user know if the command is harmful to the system! Let's create a sanitizer for this?
 - [ ] We'll have to handle `git` and `cd` seperately from others. 
 - [ ] Introduce verbose outputs for installing things.
-- [ ] Tell the models they need to change their commands depending on operating system 
+- [x] Tell the models they need to change their commands depending on operating system 
 
 # Things we can add
 
