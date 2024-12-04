@@ -26,7 +26,7 @@ We gotta show verbose outputs when we are installing cause generating command...
 
 This is the third draft of TerminAI. This is without history implementation.
 
-![TerminAI](./utils/images/TerminAI_V2_draft_4.png)
+![TerminAI](./utils/images/TerminAI_V2_draft_5.png)
 
 # Terminal
 
