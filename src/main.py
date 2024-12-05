@@ -191,8 +191,8 @@ class Worker(QThread):
                             
                             output = execute_command(command)               # If the command was harmful, the output we get here will be the reason why it was harmful and hence not executed.
                             
-                            concat_output = f"{concatenate(user_prompt = self.prompt, 
-                                                           final_output = output)} \n"
+                            concat_output = f"""{concatenate(user_prompt = self.prompt, 
+                                final_output = output)} \n"""
                         else:
                             output = command                                # we want the reply as it is because its not a system level change
                             
