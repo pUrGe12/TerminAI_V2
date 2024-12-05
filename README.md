@@ -14,7 +14,6 @@ Priorities
 
 - [ ] Introduce verbose outputs for installing things.
 - [ ] Test the changing of commands in different operating systems... For windows bypass execution policy first
-- [ ] Update the structure in the image.
 
 ---
 
@@ -22,7 +21,7 @@ Priorities
 
 This is the fifth draft of TerminAI. This is with history implementation.
 
-![TerminAI](./utils/images/TerminAI_V2_draft_5.png)
+![TerminAI](./utils/images/TerminAI_V2_draft_6.png)
 
 # Terminal
 
