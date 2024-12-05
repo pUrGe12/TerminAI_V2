@@ -32,7 +32,7 @@ Priorities
 
 This is the fifth draft of TerminAI. This is with history implementation.
 
-![TerminAI](./utils/images/TerminAI_V2_draft_6.png)
+![TerminAI](./utils/images/TerminAI_V2_draft_7.png)
 
 # Terminal
 
