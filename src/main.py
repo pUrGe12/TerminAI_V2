@@ -346,14 +346,16 @@ class ModernTerminal(QWidget):
 
     def start_processing(self):
         '''
-        We're pushing the UI updates first before calling the heavy computation tasks to give some semblance to the users.
+        This does the following things
+            1. If the user enters 'clear' then we clear the screen and change the processing boolean
+            2. This appends the prompt bar and calls the "generating response..." text while we process in the behind 
+            3. Ensures that the cursor stays at the bottom of the screen
+            4. Then calls the worker class for processing
 
-        This function essentially does 2 things,
-            - Displays the user's prompt and the output
-            - Processes the prompt through the following steps
-                a. Creating the main Json object
-                b. Categorise the operations in one of the 6 areas of interest.
+        The worker class is initialised here, passed to it is the user's prompt. Then once the result is ready, it calls the display_response function.
+        This is all threaded and it's always listening for a response.
 
+        Finally it clears the input field for new prompts.
         '''
 
         if self.is_processing:
@@ -407,6 +409,7 @@ class ModernTerminal(QWidget):
         # Then we add the prompt bar again for the next input
         self.append_prompt()
         self.is_processing = False          # Keep track of stuff man
+
 
 app = QApplication(sys.argv)
 terminal = ModernTerminal()
