@@ -38,7 +38,7 @@ This is the terminal
 
 # Installing the terminal 
 
-## Linux
+### Linux
 
 Ensure that python, pip and git are installed
 
@@ -51,7 +51,7 @@ Then clone the GitHub repo locally. Now you can start installing the dependencie
 		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
 
 
-## Windows 
+### Windows 
 
 If winget is installed then run the following command to install python
 
@@ -67,7 +67,7 @@ Then run the following command to clone the it locally,
 
 		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
 
-## MacOS
+### MacOS
 
 Install homebrew (mac’s package manager) and python
 
@@ -79,9 +79,7 @@ Install git and clone the repo
 		brew install git && git --version
 		git clone https://github.com/pUrGe12/TerminAI_V2.git && cd TerminAI_V2
 
-# Setup
-
-## The automated way
+## Setup
 
 The setup is easy, you are required to obtain 
 
@@ -98,7 +96,7 @@ Note for Windows users, you will need to bypass the execution policy to be able 
 
 		Set-ExecutionPolicy -Bypass -Scope Process
 
-# Requirements and dependencies
+## Requirements and dependencies
 
 It is advisable to install the dependencies in a python virtual environment to avoid version clashes.
 
@@ -108,14 +106,26 @@ Run the following commands to achieve that:
 
 Activate it using the following commands
 
-## Linux/Mac:		 	
+### Linux/Mac:		 	
 
 		source VirtTerminal/bin/activate
 
-## Windows (PowerShell):	 
+### Windows (PowerShell):	 
 
 		.\VirtTerminal\Scripts\Activate 
 
 Install the necessary dependencies (in the root of the repo).
 
 		pip install -r requirements.txt
+
+## Run
+
+To run the terminal,
+
+		python3 src/main.py
+
+you may need to export wayland to get a better UI, do that using
+
+		export QT_QPA_PLATFORM=wayland
+
+---
