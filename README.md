@@ -9,12 +9,16 @@
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
+---
+
+**TerminAI** is a powerful terminal that demonstrates the working of multi-model architectures. With TerminAI users can directly type in plain language what they want and have that be executed. TerminAI exhibits duality, that is, if the user enters a bash command directly, then that is immediately executed without the delays introduced by the models.
+
+
 # Things we have to add
 
 ---
 Priorities
 
-- [ ] Consider adding functionality to execute normal linux commands without having to pass it through the models.
 - [ ] We'll have to handle `git` and `cd` seperately from others. 
 
 ---
