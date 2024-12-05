@@ -97,3 +97,25 @@ For Windows users, execute the PowerShell script [setup.ps1](./utils/setup/setup
 Note for Windows users, you will need to bypass the execution policy to be able to use TerminAI at all (because Windows doesn’t allow command execution by normal users). Use the below command as an administrator in the PowerShell.l
 
 		Set-ExecutionPolicy -Bypass -Scope Process
+
+# Requirements and dependencies
+
+It is advisable to install the dependencies in a python virtual environment to avoid version clashes.
+
+Run the following commands to achieve that:
+
+		python3 -m venv VirtTerminal
+
+Activate it using the following commands
+
+## Linux/Mac:		 	
+
+		source VirtTerminal/bin/activate
+
+## Windows (PowerShell):	 
+
+		.\VirtTerminal\Scripts\Activate 
+
+Install the necessary dependencies (in the root of the repo).
+
+		pip install -r requirements.txt
