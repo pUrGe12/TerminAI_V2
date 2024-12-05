@@ -3,7 +3,7 @@
 username=$(whoami)
 os_type=$(uname)
 
-read -p "Want to submit your sudo password, if you're planning on using these privileges? (y/n): " choice
+read -p "Submit your sudo password? Note that this data is not going anywhere, its saved in a file in this directory itself (y/n): " choice
 
 if [[ "$choice" == "y" ]]; then
     read -sp "Please enter your sudo password: " sudo_password
