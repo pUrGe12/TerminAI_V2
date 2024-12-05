@@ -1,5 +1,12 @@
 # TerminAI_V2
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Code-Python-informational?style=flat&logo=python&color=blue" alt="Python" />
+  <img src="https://img.shields.io/badge/Code-Bash-informational?style=flat&logo=gnu-bash&color=lightgrey" alt="Bash" />
+  <img src="https://img.shields.io/badge/Code-PowerShell-informational?style=flat&logo=powershell&color=blue" alt="PowerShell" />
+</p>
+
+
 A python based terminal with AI capabilities. Forget commands, just tell it what it do!
 
 # Things we have to add
