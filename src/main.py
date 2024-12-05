@@ -1,7 +1,9 @@
 import sys
 import os
+import subprocess
 
 # uncomment the following line of code if you don't see the terminal exactly how it looks like in the README file.
+
 # os.environ["QT_QPA_PLATFORM"] = "wayland"
 
 # PyQT5 imports for the UI
@@ -37,6 +39,10 @@ from pathlib import Path
 # Load the data from the setup files as a dictionary
 from utils.setup.data import user_dict
 
+# Importing the list of available commands as a list
+from utils.setup.system_commands import commands_list
+
+
 load_dotenv(dotenv_path=Path(__file__).parent.parent / '.env')              # Loading the enviornment
 
 url: str = str(os.getenv("SUPABASE_URL")).strip()
@@ -56,9 +62,12 @@ def add_history(user_prompt, categoriser_json, results):
     '''
     assert type(results) == list, 'results must be a list'
 
-    Info = {'Prompt': user_prompt, 'Categorizer_json': categoriser_json, 'Results': results}
-    response = supabase.table('History_v3').insert(Info).execute()
-    
+    if categoriser_json != None:
+        Info = {'Prompt': user_prompt, 'Categorizer_json': categoriser_json, 'Results': results}
+        response = supabase.table('History_v3').insert(Info).execute()
+    else:
+        Info = {'Prompt': user_prompt, 'Results': results}
+        response = supabase.table('History_v3').insert(Info).execute()
 
 def get_history(n):
     ''' Gets the last n entries from the History_v3 table. We'll usually just pull the last entry and thats all '''
@@ -90,33 +99,65 @@ class Worker(QThread):
          """
 
         try:
-            ''' We're going to pull from the database here, because we need to pass it to the GPT_response to get the main json right. '''
+            '''
+            First check if we need the GPT processing at all 
 
-            history = get_history(1)
-            # print(f'Pulled history: {history}')
+            - If the first word of the user's prompt is a command, then we don't have to process using the GPT models
+            - Else, we should
 
-            username = user_dict.get("username")
-            operating_system = user_dict.get("operating_system")
-            sudo_password = user_dict.get("sudo_password")
-
-            processed_output = GPT_response(
-                user_prompt = self.prompt, 
-                history = history, 
-                username = username, 
-                operating_system = operating_system, 
-                sudo_password = sudo_password
-                )
-
-            # print(f"processed_output = {processed_output}")
+            We are not using history if the prompt is a command of course cause the user remembers what they wrote. But we still add it in the database.
+            In case the next prompt is not a command and it references the previous one
+            '''
             
-            categorised_output = categorise(processed_output)
-            operations_q = process_json(f"{categorised_output}")
-            results = self.execute_queue(operations_q, categorised_output)
+            if str(self.prompt).split(' ')[0] in commands_list:                     # The problem with this approach is, I can't type anything starting with 'which' and 'what' or something...
+                results = []                
+                
+                # We can't execute 'cd' in a subprocess else the changes won't reflect
+                if str(self.prompt).split(' ')[0].strip().lower().startswith('cd'):
+                    target_dir = self.prompt.split(" ")[1]
+                    target_dir = os.path.expanduser(target_dir)
+                    os.chdir(target_dir)
+                    
+                    output = f"Changed directory to {os.getcwd()}"
+                    results.append(output)
 
-            ''' We're gonna add to history here, because we have the necessary things '''
-            add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
+                else:
 
-            # print('Added history')
+                    output = subprocess.run(self.prompt, shell=True, 
+                                text=True, check = True, capture_output=True)
+                    
+                    # print(output.stdout)
+                    # Not using concat on this because the user doesn't need that
+                    results.append(output.stdout)
+
+                add_history(user_prompt = self.prompt, categoriser_json = None, results = results)   # Not adding categorized json --> defaults to NULL
+
+            else:
+                history = get_history(1)
+                # print(f'Pulled history: {history}')
+
+                username = user_dict.get("username")
+                operating_system = user_dict.get("operating_system")
+                sudo_password = user_dict.get("sudo_password")
+
+                processed_output = GPT_response(
+                    user_prompt = self.prompt, 
+                    history = history, 
+                    username = username, 
+                    operating_system = operating_system, 
+                    sudo_password = sudo_password
+                    )
+
+                # print(f"processed_output = {processed_output}")
+                
+                categorised_output = categorise(processed_output)
+                operations_q = process_json(f"{categorised_output}")
+                results = self.execute_queue(operations_q, categorised_output)
+
+                ''' We're gonna add to history here, because we have the necessary things '''
+                add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
+
+                # print('Added history')
 
         except Exception as e:
             results = [f"Error: {str(e)}"]
@@ -322,6 +363,16 @@ class ModernTerminal(QWidget):
         self.current_prompt = self.input_field.text()
 
         if self.current_prompt.strip():
+            # We'll have to clear the terminal here... if the user enters clear 
+
+            if self.current_prompt.strip().lower() == "clear":
+                # No need to call the worker class here
+                
+                self.terminal_display.clear()                       # Clear the terminal
+                self.append_prompt()                                # Adding the prompt bar again
+                self.is_processing = False                          # Resetting the status
+                self.input_field.clear()                            # Clearing the input field
+                return
 
             # First we insert the prompt in the right place
             self.terminal_display.insertPlainText(self.current_prompt + "\n")
