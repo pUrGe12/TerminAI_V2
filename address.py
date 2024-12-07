@@ -36,7 +36,7 @@ prompts = {"model_json": """
 	Examples:
 
 	Example 1: Single Task (System-Level change)
-	User Query: "Set volume to 50%."
+	User Query: "Set my volume to 50%."
 
 	@@@json
 		{
@@ -54,7 +54,7 @@ prompts = {"model_json": """
 	@@@
 
 	Example 2: Multitasking (System-Level change)
-	User Query: "Write a 500-word essay on Abraham Lincoln and save it as a file named 'lincoln.txt' in the root directory."
+	User Query: "Write a 500-word essay on Abraham Lincoln and save it in my computer as a file named 'lincoln.txt' in the root directory."
 
 	@@@json
 		{
@@ -87,7 +87,7 @@ prompts = {"model_json": """
 	@@@
 
 	Example 3: Multitasking (System-Level change)
-	User Query: "Generate a sample code using requests library in python and save that in the desktop"
+	User Query: "Generate a sample code using requests library in python and save that in my desktop"
 
 	@@@json
 		{
@@ -119,7 +119,7 @@ prompts = {"model_json": """
 	@@@
 
 	Example 4: Installing things (system-level change)
-	User Query: "install the python module used to send web requests"
+	User Query: "install the python module used to send web requests in my computer"
 
 	@@@json
 		{
@@ -136,6 +136,23 @@ prompts = {"model_json": """
 		}
 	@@@
 
+	Example 5: Installing things (system-level change)
+	User Query: "How many images are there in my computer?"
+
+	@@@json
+		{
+			"operation": {
+			"type": "check number of images",
+			"order": 0,
+			"parameters": {
+				"extension": ".png, .img, .jpg",
+				"user's username": "<given>",
+				"sudo-password": "<given>",
+				"operating-system": <given>
+				}
+			}
+		}
+	@@@
 
 	If the user's input is not requesting for any system level change, then label that as content generation and generate the json including the necessary fields.
 
