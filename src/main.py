@@ -140,6 +140,8 @@ class Worker(QThread):
                 operating_system = user_dict.get("operating_system")
                 sudo_password = user_dict.get("sudo_password")
 
+                print(f'{history}')
+
                 processed_output = GPT_response(
                     user_prompt = self.prompt, 
                     history = history, 
@@ -148,16 +150,19 @@ class Worker(QThread):
                     sudo_password = sudo_password
                     )
 
-                # print(f"processed_output = {processed_output}")
+                print(f"processed_output = {processed_output}")
                 
                 categorised_output = categorise(processed_output)
+
+                print(f"categorized: {categorised_output}")
+
                 operations_q = process_json(f"{categorised_output}")
                 results = self.execute_queue(operations_q, categorised_output)
 
                 ''' We're gonna add to history here, because we have the necessary things '''
                 add_history(user_prompt = self.prompt, categoriser_json = categorised_output, results = results)
 
-                # print('Added history')
+                print('Added history')
 
         except Exception as e:
             results = [f"Error: {str(e)}"]
@@ -194,6 +199,7 @@ class Worker(QThread):
             operation_type = operation.get('operation_type')
             model_name = operation.get('model_name')                    # Which model is acting up?
             
+            print(f"{operation_type}")
             print(f"model name: {model_name}")
             
             parameters = operation.get('parameters')
