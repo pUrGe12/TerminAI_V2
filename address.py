@@ -200,7 +200,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		OS-level operations are defined as:
 			
 			1. Requests for system information (e.g., CPU cores, available storage, hardware info).
-			2. Managing system processes or configurations (e.g., changing file permissions, killing processes, using system services).
+			2. Managing system processes or configurations (e.g., changing file permissions, killing processes, using system services, enabling night mode).
 			3. Requests to perform system-wide actions like rebooting, updating, shutting down, or checking system status (e.g., battery, brightness, volume).
 			4. Any other system operation that directly interacts with or requires hardware information, i.e., requires interaction with the operating system.
 
@@ -328,17 +328,23 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		3. Requests to perform system-wide actions like rebooting, updating, shutting down, or checking system status (e.g., battery, brightness, volume).
 		4. Any other system operation that directly interacts with or requires hardware information, i.e., requires interaction with the operating system.
 
-		Your job is to provide the code that they can type in the terminal to achieve what they are asking for. 
-
-		The command should be relevant for the operating system mentioned and should use the information in the parameters as and when required.
+		**Your job is to provide the code that they can type in the terminal to achieve what they are asking for.** The command should be relevant for the operating system mentioned and should use the information in the parameters as and when required.
 		
 		**If the operating system is windows, then you must output powershell scripts, if mac or linux then bash scripts.**
 
-		You must output the code, such that it is ready to copy and use as it is. You must output the code and nothing else.
+		- You must output the code, such that it is ready to copy and use as it is. 
+		- You must output the code and nothing else.
 
 		The additional data may or may not be empty. This represents the output of previously ran models. If the bash code requires data that is not present in the parameters then it will be present in the additional data.
 
-		For example, if the operation is regarding finding free space, then the command becomes "df -h" in linux and mac systems.
+		For example, 
+
+		- if the operation is regarding finding free space, then the command becomes "df -h" in linux and mac systems.
+
+		if the operation is regarding changing something that involves the settings like the background, then use 
+		- gsettings set org.gnome.desktop.background picture-uri <the_path_to_the_file>
+
+		If the operations ask you to change something that involves the settings, then use **gsettings**
 
 		- That is, a terminal command to achieve the requested OS-level operation is generated and output.
 
