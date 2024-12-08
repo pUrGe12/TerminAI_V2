@@ -88,7 +88,7 @@ Make sure you specify in the parameters of the 2nd operation that the content li
 				"parameters": {
 				"name": "lincoln.txt",
 				"location": "desktop",
-				"content": #Present_In_Additional_Content
+				"content": "", "__comment__": "the 'content' is present in the additional data"
 				"user's username": "<given>",
 				"sudo-password": "<given>",
 				"operating-system": <given>
@@ -123,7 +123,7 @@ Make sure you specify in the parameters of the 2nd operation that the content li
 				"parameters": {
 				"name": "sample.py",
 				"location": "~/Desktop/",
-				"content": #Present_In_Additional_Content
+				"content": "", "__comment__": "the 'content' is present in the additional data"
 				"user's username": "<given>",
 				"sudo-password": "<given>",
 				"operating-system": <given>
@@ -372,11 +372,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 		For example, if the user asks you to 'Open the calculator app.' then the code becomes 'gnome-calculator &'.
 		That is, a terminal command to achieve the requested application-level operation is generated and output.
 
-		**Note that if you can avoid using sudo privileges then avoid at any cost.**
-
-		If you have to use sudo privileges then use the given sudo password, through the command
-
-			"echo <sudo password> | sudo -S <sudo command>"
+		**avoid sudo commands**
 """,
 
 "model_4": """
@@ -430,9 +426,12 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		**Note that if you can avoid using sudo privileges then avoid at any cost.**
 
-		If you HAVE to use sudo privileges then use the given sudo password, through the command
+		If you have to use sudo privileges then use the given sudo password, through the command
 
-			"echo <sudo password> | sudo -S <sudo command>"
+			"echo <sudo_password> | sudo -S <sudo_command>"
+
+		Note that if you're using 'apt' then use it with the "-y" option to force all installs
+
 """,
 
 "model_6": """
@@ -482,7 +481,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		If you have to use sudo privileges then use the given sudo password, through the command
 
-			"echo <sudo password> | sudo -S <sudo command>"
+			"echo <sudo_password> | sudo -S <sudo_command>"
 """,
 
 "concat": """
@@ -493,11 +492,12 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 	Example,
 		prompt: "show available networks and connect to the open one"
-		output: "Available networks: xyz, abc ..., open network: abc"
+		output: "xyz, abcd, ..., abc"
 
-		response: "These are the available networks: xyz, abc ..., and connected to the open network: abc."
+		response: "These are the available networks: xyz, abc ..."
 
-	Just give a positive reply to whatever the user was requesting in the prompt
+	If the output is content that is answering the user's prompt, then phrase the same content in a much better manner, ensure that it matches 
+	with that what the user requested.
 """
 }
 
