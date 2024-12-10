@@ -208,7 +208,7 @@ Note that if the operations involve anything that can be fixed using bash codes 
 
 		Application-level operations are defined as:
 
-			1. Opening, closing, or interacting with GUI applications (e.g., opening a web browser, viewing a PDF).
+			1. Opening, closing, launching or interacting with GUI applications (e.g., opening a web browser, viewing a PDF).
 			2. Launching applications that require a graphical interface.
 			3. Any operation that requires the use of an application to access or display content (e.g., opening a document in a text editor).
 
