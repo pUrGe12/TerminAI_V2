@@ -13,20 +13,6 @@ A python based terminal with AI capabilities. Forget commands, just tell it what
 
 **TerminAI** is a powerful terminal that demonstrates the working of multi-model architectures. With TerminAI users can directly type in plain language what they want and have that be executed. TerminAI exhibits duality, that is, if the user enters a bash command directly, then that is immediately executed without the delays introduced by the models.
 
-
-# Things we have to add
-
----
-Priorities
-
-- [ ] We'll have to handle `git` and `cd` seperately from others. 
-
----
-
-- [ ] Introduce verbose outputs for installing things.
-
----
-
 # Framework 
 
 This is the fifth draft of TerminAI. This is with history implementation.
@@ -136,3 +122,16 @@ you may need to export wayland to get a better UI, do that using
 ## Potential things to do
 
 - [ ] Make a better setup file something that tells much more info about the system! For e.g. what the battery name is, model might think BAT0, but you may have BAT1. We gotta think of a clever way to represent this information.
+
+# Things we have to add
+
+---
+Priorities
+
+- [ ] We'll have to handle `git` and `cd` seperately from others. 
+
+---
+
+- [ ] Introduce verbose outputs for installing things.
+
+---
