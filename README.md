@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Code-PowerShell-informational?style=flat&logo=powershell&color=blue" alt="PowerShell" />
 </p>
 
+## Winner of the [LLM Agents hackathon](https://rdi.berkeley.edu/llm-agents-hackathon/)!
 
 A python based terminal with AI capabilities. Forget commands, just tell it what it do! Check out the demo video [here](https://www.youtube.com/watch?v=nFkwPLMH3D4)
 
