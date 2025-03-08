@@ -124,12 +124,14 @@ you may need to export wayland to get a better UI, do that using
 
 - [ ] Make a better setup file something that tells much more info about the system! For e.g. what the battery name is, model might think BAT0, but you may have BAT1. We gotta think of a clever way to represent this information.
 
+- [ ] Add multimodal support for better integration of textual and visual prompts.
+
 # Things we have to add
 
 ---
 Priorities
 
-- [ ] We'll have to handle `git` and `cd` seperately from others. 
+- [ ] We'll have to handle `git` and `cd` separately from others. 
 
 ---
 
